@@ -5,17 +5,16 @@ import java.util.ArrayList;
 public class ContactItem {
     String name;
     String number;
-    int resourceId;
+//    int resourceId;
 
-    public ContactItem(int resourceId, String name, String number) {
+    public ContactItem(String name, String number) {
         this.name = name;
         this.number = number;
-        this.resourceId = resourceId;
     }
-
-    public int getResourceId() {
-        return resourceId;
-    }
+//
+//    public int getResourceId() {
+//        return resourceId;
+//    }
 
     public String getName() {
         return name;
@@ -25,23 +24,23 @@ public class ContactItem {
         return number;
     }
 
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
+//    public void setResourceId(int resourceId) {
+//        this.resourceId = resourceId;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void setNumber(String number) {
+//        this.number = number;
+//    }
 
     public static ArrayList<ContactItem> createContactList(int numContacts) {
         ArrayList<ContactItem> contacts = new ArrayList<ContactItem>();
 
         for (int i = 1; i <= numContacts; i++) {
-            contacts.add(new ContactItem(i, "문석훈", "010-3088-8447"));
+            contacts.add(new ContactItem("문석훈", "010-3088-8447"));
         }
 
         return contacts;

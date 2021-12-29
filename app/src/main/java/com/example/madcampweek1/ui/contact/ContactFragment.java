@@ -39,10 +39,10 @@ public class ContactFragment extends Fragment {
 //        View root = binding.getRoot();
 //
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_contact, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.contact_item, container, false);
 
 
-//        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
 //
 //        mcontactItems = ContactItem.createContactList(5);
 //        mRecyclerView.setHasFixedSize(true);
