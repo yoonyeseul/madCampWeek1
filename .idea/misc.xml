@@ -5,8 +5,9 @@
       <map>
         <entry key="..\:/Users/yoon/Desktop/madcampweek1/app/src/main/res/layout/activity_main.xml" value="0.175" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11398176291793313" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.11627906976744186" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.30117753623188404" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.234375" />
       </map>
     </option>
