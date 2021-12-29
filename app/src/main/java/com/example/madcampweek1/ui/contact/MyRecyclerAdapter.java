@@ -1,5 +1,6 @@
 package com.example.madcampweek1.ui.contact;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,50 +14,55 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.madcampweek1.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
+public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Holder> {
 
-    private ArrayList<ContactItem> mContactList;
+    private Context context;
+    private List<ContactItem> list = new ArrayList<>();
 
-    @NonNull
+    public MyRecyclerAdapter(Context context, List<ContactItem> list) {
+        this.context = context;
+        this.list = list;
+    }
+
+    // ViewHolder 생성
+    // row layout을 화면에 뿌려주고 holder에 연결
     @Override
-    public MyRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recyclerview, parent, false);
-        return new ViewHolder(view);
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_contact, parent, false);
+        Holder holder = new Holder(view);
+        return holder;
     }
 
+    /*
+     * Todo 만들어진 ViewHolder에 data 삽입 ListView의 getView와 동일
+     *
+     * */
     @Override
-    public void onBindViewHolder(@NonNull MyRecyclerAdapter.ViewHolder holder, int position) {
-        holder.onBind(mContactList.get(position));
+    public void onBindViewHolder(Holder holder, int position) {
+        // 각 위치에 문자열 세팅
+        int itemposition = position;
+        holder.name.setText(list.get(itemposition).name);
+        holder.number.setText(list.get(itemposition).number);
+        //Log.e("StudyApp", "onBindViewHolder" + itemposition);
     }
 
-    public void setContactList(ArrayList<ContactItem> list){
-        this.mContactList = list;
-        notifyDataSetChanged();
-    }
-
+    // 몇개의 데이터를 리스트로 뿌려줘야하는지 반드시 정의해줘야한다
     @Override
     public int getItemCount() {
-        return mContactList.size();
+        return list.size(); // RecyclerView의 size return
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView profile;
-        TextView name;
-        TextView number;
+    // ViewHolder는 하나의 View를 보존하는 역할을 한다
+    public class Holder extends RecyclerView.ViewHolder{
+        public TextView name;
+        public TextView number;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            profile = (ImageView) itemView.findViewById(R.id.profile);
-            name = (TextView) itemView.findViewById(R.id.name);
-            number = (TextView) itemView.findViewById(R.id.number);
-        }
-
-        void onBind(ContactItem item){
-            profile.setImageResource(item.getResourceId());
-            name.setText(item.getName());
-            number.setText(item.getNumber());
+        public Holder(View view){
+            super(view);
+            name = (TextView) view.findViewById(R.id.name);
+            number = (TextView) view.findViewById(R.id.number);
         }
     }
 }

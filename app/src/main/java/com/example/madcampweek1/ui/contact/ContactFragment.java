@@ -32,28 +32,23 @@ public class ContactFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        contactViewModel =
-                new ViewModelProvider(this).get(ContactViewModel.class);
-
-        binding = FragmentContactBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textHome;
-        contactViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
-
-//        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+//        contactViewModel =
+//                new ViewModelProvider(this).get(ContactViewModel.class);
+////
+//        binding = FragmentContactBinding.inflate(inflater, container, false);
+//        View root = binding.getRoot();
 //
-//        list = ContactItem.createContactList(5);
-//        recyclerView.setHasFixedSize(true);
-//        adapter = new MyRecyclerAdapter();
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        recyclerView.setAdapter(adapter);
+
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_contact, container, false);
+
+
+//        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+//
+//        mcontactItems = ContactItem.createContactList(5);
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerAdapter = new MyRecyclerAdapter(getActivity(), mcontactItems);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        mRecyclerView.setAdapter(mRecyclerAdapter);
 
 
 //        mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
@@ -70,12 +65,12 @@ public class ContactFragment extends Fragment {
 //        mcontactItems = ContactItem.createContactList(5);
 //        mRecyclerAdapter.setContactList(mcontactItems);
 
-        return root;
+        return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        binding = null;
+//    }
 }
