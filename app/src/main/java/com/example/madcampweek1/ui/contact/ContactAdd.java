@@ -1,6 +1,6 @@
 package com.example.madcampweek1.ui.contact;
 
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,27 +15,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import com.example.madcampweek1.MainActivity;
 import com.example.madcampweek1.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.*;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
-public class ContactEdit extends AppCompatActivity {
+public class ContactAdd extends AppCompatActivity {
     private Button writeBtn;
     private EditText nameText, numberText;
-    private int id;
-    public static Context mContext;
+
+
     private int COUNT = 0;
     private JSONObject obj = null;
     private TextView tv; //저장한 json값 불러오기기
@@ -43,24 +37,21 @@ public class ContactEdit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.contact_edit);
         Toolbar tb = (Toolbar) findViewById(R.id.toolbar_edit);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
         ab.setTitle("");
         ab.setDisplayHomeAsUpEnabled(true);
-        Intent getintent = getIntent();
-        String name = (String) getintent.getSerializableExtra("contact_name");
-        String number = (String) getintent.getSerializableExtra("contact_number");
-        id = (int) getintent.getSerializableExtra("contact_id");
         nameText = (EditText)findViewById(R.id.edit_name);
         numberText = (EditText)findViewById(R.id.edit_number);
-        nameText.setText(name);
-        numberText.setText(number);
+
 
         obj = new JSONObject();
-        mContext = this;
+
+//        /** 외부 저장소에에 저장하기 위 권한 설정 **/
+//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
+//        checkExternalStorage();
 
 
     }
@@ -74,7 +65,7 @@ public class ContactEdit extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_complete:
-                JSONArray jArray = editData(nameText.getText().toString(), numberText.getText().toString(), id);
+                JSONArray jArray = insertData(nameText.getText().toString(), numberText.getText().toString());
 
                 try {
                     obj.put("contact", jArray);//배열을 넣음
@@ -92,32 +83,31 @@ public class ContactEdit extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public JSONArray editData(String name, String number, int id) {
+    public JSONArray insertData(String name, String number){
+        COUNT++; //입력한 데이터가 몇개인지 카운트하는 변수, 없어도 무관
         String fileTitle = "contact.json";
         File file = new File(getFilesDir(), fileTitle);
         String json = readFile();
         try {
             JSONArray oldJson = jsonParsing(json);
-            for(int i = 0; i < oldJson.length(); i++) {
-                if(oldJson.getJSONObject(i).getInt("id") == id) {
-                    System.out.println("foundit!");
-                    oldJson.getJSONObject(i).put("name", name);
-                    oldJson.getJSONObject(i).put("number", number);
-                    break;
-                }
-            }
+            JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
+            JSONArray jArray = new JSONArray();
 //            ContactItem newContact = new ContactItem(name, number);
             //COUNT변수 정수형에서 문자형으로 변환 후 JSONObject에 입력
+            COUNT = COUNT+1;
+            sObject.put("id", COUNT);
+            sObject.put("name", name);
+            sObject.put("number", number);
+
 
             //JSONObject to JSONArray
-            return oldJson;
+            return oldJson.put(sObject);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
     }
-
 
     public void writeFile(JSONObject object) {
 
@@ -129,12 +119,15 @@ public class ContactEdit extends AppCompatActivity {
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(file,false));
             bw.write(object.toString());
+//
+//            bw.newLine();
             bw.close();
 
         } catch (IOException e) {
             Log.i("저장오류",e.getMessage());
         }
     }
+
     private JSONArray jsonParsing(String json) {
         JSONArray contactList = new JSONArray();
         try{
@@ -142,6 +135,7 @@ public class ContactEdit extends AppCompatActivity {
 
             JSONArray contactArray = jsonObject.getJSONArray("contact");
             COUNT = jsonObject.getInt("count");
+
             for(int i=0; i<contactArray.length(); i++)
             {
                 JSONObject contactObject = contactArray.getJSONObject(i);
@@ -180,4 +174,5 @@ public class ContactEdit extends AppCompatActivity {
         }
         return result;
     }
+
 }
