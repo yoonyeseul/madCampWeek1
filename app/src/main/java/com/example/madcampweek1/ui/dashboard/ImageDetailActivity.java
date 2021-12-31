@@ -24,7 +24,7 @@ public class ImageDetailActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        Toast.makeText(this, "인덱스: " + getIntent().getIntExtra("imageIdx", 0), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "인덱스: " + getIntent().getIntExtra("imageIdx", 0), Toast.LENGTH_LONG).show();
 
         String imgpath = getCacheDir() + "/" + "image" + getIntent().getIntExtra("imageIdx", 0);
         Bitmap bm = BitmapFactory.decodeFile(imgpath);

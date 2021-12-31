@@ -10,7 +10,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
+import android.util.Size;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +31,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.madcampweek1.R;
 import com.example.madcampweek1.databinding.FragmentDashboardBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,8 +50,10 @@ public class DashboardFragment extends Fragment {
     private int count_selected = 0;
     GridLayout grid = null;
     Button btn;
-//    Vector<String> imagesName = new Vector<String>();
     private int maxIdx = 0;
+    private Thread currentThread;
+
+    public Handler handler = new Handler();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,39 +84,137 @@ public class DashboardFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE);
     }
 
-    private void loadStoredImages() {
-        try {
-            File file = getActivity().getCacheDir();
-            File[] flist = file.listFiles();
-            String[] nameList = getSortedNameList(flist);
-            for (int i = 0; i < flist.length; i++) {
-                String imgpath = getActivity().getCacheDir() + "/" + flist[i].getName();
-                Bitmap bm = BitmapFactory.decodeFile(imgpath);
-                ImageView imageView = new ImageView(getContext());
-                imageView.setImageBitmap(bm);
-                addImageViewToGridLayout(imageView, getIdx(flist[i].getName()));
-                maxIdx = Math.max(maxIdx, getIdx(flist[i].getName()));
-            }
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
+        BottomNavigationView navigation_view = getActivity().findViewById(R.id.nav_view);
+        navigation_view.getMenu().findItem(R.id.navigation_dashboard).setEnabled(false);
     }
 
-    private String[] getSortedNameList(File[] fList) {
-        String[] ret = new String[fList.length];
-        for (int i = 0; i < fList.length; i++) {
-            ret[i] = fList[i].getName();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        currentThread.interrupt();
+        try {
+            currentThread.wait();
+        } catch (Exception e) {
         }
-        Arrays.sort(ret, new Comparator<String>() {
+        BottomNavigationView navigation_view = getActivity().findViewById(R.id.nav_view);
+        navigation_view.getMenu().findItem(R.id.navigation_dashboard).setEnabled(true);
+    }
+
+    public void loadStoredImages() {
+        // 버튼 disable 후, 끝나면 enable
+        currentThread = new Thread(new Runnable() {
             @Override
-            public int compare(String o1, String o2) {
-                return Integer.valueOf(o1.substring(5)).compareTo(Integer.valueOf(o2.substring(5)));
+            public void run() {
+                try {
+                    File filePath = getActivity().getCacheDir();
+                    File[] flist = filePath.listFiles();
+                    File[] sortedFlist = getSortedNameList(flist);
+                    for (File i : sortedFlist) {
+                        String imgpath = filePath + "/" + i.getName();
+
+                        ImageView imageView = new ImageView(getContext());
+
+                        maxIdx = Math.max(maxIdx, getImageIdxFromName(i.getName()));
+
+                        Bitmap bm = getBitmapForImgView(imgpath);
+                        if (Thread.interrupted()) break;
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                imageView.setImageBitmap(bm);
+                                addImageViewToGridLayout(imageView, getImageIdxFromName(i.getName()));
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+        });
+        currentThread.start();
+    }
+
+//    private void loadStoredImages() {
+//        try {
+//            File filePath = getActivity().getCacheDir();
+//            File[] flist = filePath.listFiles();
+//            File[] sortedFlist = getSortedNameList(flist);
+//            for (File i : sortedFlist) {
+//                String imgpath = filePath + "/" + i.getName();
+////                Bitmap bm = ThumbnailUtils.createImageThumbnail(imgpath,  MediaStore.Images.Thumbnails.MINI_KIND);
+////                Bitmap bm = getBitmapForImage(imgpath); //BitmapFactory.decodeFile(imgpath);
+//
+//                ImageView imageView = new ImageView(getContext());
+//                setBitmapToImgView(imgpath, imageView);
+//
+//                addImageViewToGridLayout(imageView, getImageIdxFromName(i.getName()));
+//                maxIdx = Math.max(maxIdx, getImageIdxFromName(i.getName()));
+//            }
+//        } catch (Exception e) {
+////            Toast.makeText(getActivity(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+    private Bitmap getBitmapForImgView(String imgPath) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imgPath, options);
+        int imgWidth = getImageWidthAccordingToWindowSize();
+        options.inSampleSize = calculateInSampleSize(options, imgWidth, imgWidth);
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(imgPath, options);
+    }
+
+    private void setBitmapToImgView(String imgPath, ImageView imageView) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imgPath, options);
+        int imgWidth = getImageWidthAccordingToWindowSize();
+        options.inSampleSize = calculateInSampleSize(options, imgWidth, imgWidth);
+        options.inJustDecodeBounds = false;
+        imageView.setImageBitmap(BitmapFactory.decodeFile(imgPath, options));
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    private File[] getSortedNameList(File[] fList) {
+        File[] ret = new File[fList.length];
+        for (int i = 0; i < fList.length; i++) {
+            ret[i] = fList[i];
+        }
+        Arrays.sort(ret, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                String name1 = o1.getName(), name2 = o2.getName();
+                return Integer.valueOf(name1.substring(5)).compareTo(Integer.valueOf(name2.substring(5)));
             }
         });
         return ret;
     }
 
-    private int getIdx(String name) {
+    private int getImageIdxFromName(String name) {
         return Integer.parseInt(name.substring(5));
     }
 
@@ -120,6 +226,7 @@ public class DashboardFragment extends Fragment {
                     InputStream in = getActivity().getContentResolver().openInputStream(data.getData());
 
                     Bitmap img = BitmapFactory.decodeStream(in);
+
                     in.close();
                     saveBitmapToJpeg(img, ++maxIdx);
 
@@ -150,11 +257,10 @@ public class DashboardFragment extends Fragment {
 
     private void addImageViewToGridLayout(ImageView iv, int id) {
 
-        Point size = getWindowSize();
+        int imageWidth = getImageWidthAccordingToWindowSize();
 
         iv.setId(id);
-//        imagesName.add("image" + id);
-        iv.setLayoutParams(new LinearLayout.LayoutParams(size.x / 3, size.x / 3));
+        iv.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,47 +284,37 @@ public class DashboardFragment extends Fragment {
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                Toast.makeText(getActivity(), "삭제 취소", Toast.LENGTH_SHORT);
+                                // Toast.makeText(getActivity(), "삭제 취소", Toast.LENGTH_SHORT);
                             }
                         })
                         .show();
-                return false;
+                return true;
             }
         });
         grid.addView(iv);
     }
 
-    private Point getWindowSize() {
+    private int getImageWidthAccordingToWindowSize() {
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        return size;
+        return size.x / 3;
     }
 
     private void deleteImage(int imgIdx) {
         String imgName = "image" + imgIdx;
         try {
-            File file = getActivity().getCacheDir();  // 내부저장소 캐시 경로를 받아오기
+            File file = getActivity().getCacheDir();
             File[] flist = file.listFiles();
             for (int i = 0; i < flist.length; i++)
-                if (flist[i].getName().equals(imgName)) {   // 삭제하고자 하는 이름과 같은 파일명이 있으면 실행
-                    flist[i].delete();  // 파일 삭제
+                if (flist[i].getName().equals(imgName)) {
+                    flist[i].delete();
                 }
-//            deleteImageFromVector(imgIdx);
         } catch (Exception e) {
             Toast.makeText(getActivity(), "파일 삭제 실패", Toast.LENGTH_SHORT).show();
         }
     }
-
-//    private void deleteImageFromVector(int imageIdx) {
-//        imagesName.remove(imageIdx);
-//        for (int i = imageIdx; i < imagesName.size(); ++i) {
-//            ImageView iv = (ImageView) getView().findViewById(i + 1);
-//            iv.setId(i);
-//            imagesName.set(i, "image" + imagesName.size());
-//        }
-//    }
 
     @Override
     public void onDestroyView() {

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.example.madcampweek1.databinding.ActivityMainBinding;
 
+import com.example.madcampweek1.ui.dashboard.DashboardFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
