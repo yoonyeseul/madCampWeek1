@@ -92,7 +92,7 @@ public class ContactAdd extends AppCompatActivity {
                     obj.put("contact", jArray);//배열을 넣음
                     obj.put("count", COUNT);
                     writeFile(obj);
-                    Toast.makeText(getApplicationContext(),"입력완료",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"추가완료",Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

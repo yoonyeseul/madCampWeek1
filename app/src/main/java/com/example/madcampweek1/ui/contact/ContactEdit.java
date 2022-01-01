@@ -101,7 +101,6 @@ public class ContactEdit extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                System.out.println("1234567890");
                 Intent intent1 = new Intent(getApplicationContext(), ContactDetail.class);
                 intent1.putExtra("contact_name", name);
                 intent1.putExtra("contact_number", number);
@@ -123,7 +122,7 @@ public class ContactEdit extends AppCompatActivity {
                     obj.put("contact", jArray);//배열을 넣음
                     obj.put("count", COUNT);
                     writeFile(obj);
-                    Toast.makeText(getApplicationContext(),"입력완료",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"수정완료",Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

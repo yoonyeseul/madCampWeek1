@@ -11,18 +11,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16sp">
+        android:layout_height="56dp"
+        android:paddingHorizontal="12dp"
+        android:background="@color/background_gray"
+        >
 
         <Button
             android:id="@+id/button"
             style="@style/Widget.AppCompat.Button.Small"
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:layout_marginEnd="4dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@drawable/ic_baseline_add_24"
-            android:textSize="20sp"
-            app:backgroundTint="#666666"
+            app:backgroundTint="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,17 +31,18 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:text="갤러리"
-            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="20sp"
-            android:layout_height="20sp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="18dp"
             android:background="@drawable/ic_image_layout"
             app:backgroundTint="#666666"
@@ -59,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="3"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            />
 
     </ScrollView>
 </LinearLayout>
