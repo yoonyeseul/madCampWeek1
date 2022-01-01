@@ -52,6 +52,8 @@ public class DashboardFragment extends Fragment {
     Button btn;
     private int maxIdx = 0;
     private Thread currentThread;
+    private int gridColumnCount = 3;
+    public static int viewToDelete = 0;
 
     public Handler handler = new Handler();
 
@@ -72,6 +74,23 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        Button btn2 = binding.button2;
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                grid.removeAllViews();
+                gridColumnCount = gridColumnCount == 1 ? 3 : 1;
+                grid.setColumnCount(gridColumnCount);
+                currentThread.interrupt();
+                try {
+                    currentThread.wait();
+                } catch (Exception e) {
+                }
+                loadStoredImages();
+            }
+        });
+
+        grid.setColumnCount(3);
         loadStoredImages();
 
         return root;
@@ -82,6 +101,17 @@ public class DashboardFragment extends Fragment {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (viewToDelete != 0) {
+            ImageView iv = getActivity().findViewById(viewToDelete);
+            ((ViewManager) iv.getParent()).removeView(iv);
+            deleteImage(iv.getId());
+            viewToDelete = 0;
+        }
     }
 
     @Override
@@ -259,6 +289,11 @@ public class DashboardFragment extends Fragment {
 
         int imageWidth = getImageWidthAccordingToWindowSize();
 
+//        GridLayout.LayoutParams param= new GridLayout.LayoutParams(GridLayout.spec(
+//                GridLayout.UNDEFINED,GridLayout.FILL,1f),
+//                GridLayout.spec(GridLayout.UNDEFINED,GridLayout.FILL,1f));
+//        iv.setLayoutParams(param);
+
         iv.setId(id);
         iv.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -299,7 +334,7 @@ public class DashboardFragment extends Fragment {
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        return size.x / 3;
+        return size.x / gridColumnCount;
     }
 
     private void deleteImage(int imgIdx) {
