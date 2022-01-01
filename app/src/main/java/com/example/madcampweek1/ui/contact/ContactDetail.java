@@ -31,7 +31,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ContactDetail extends AppCompatActivity {
-    TextView nameView, numberView, numberHeader;
+    TextView nameView, numberView, numberHeader, emailView, emailHeader, webView,
+            webHeader, jobView, jobHeader, snsView, snsHeader, addressView, addressHeader;
     int id;
     int COUNT;
     @Override
@@ -49,6 +50,11 @@ public class ContactDetail extends AppCompatActivity {
         Intent intent = getIntent();
         String name = (String) intent.getSerializableExtra("contact_name");
         String number = (String) intent.getSerializableExtra("contact_number");
+        String email = (String) intent.getSerializableExtra("contact_email");
+        String web = (String) intent.getSerializableExtra("contact_web");
+        String job = (String) intent.getSerializableExtra("contact_job");
+        String sns = (String) intent.getSerializableExtra("contact_sns");
+        String address = (String) intent.getSerializableExtra("contact_address");
 
         id = (int) intent.getSerializableExtra("contact_id");
 
@@ -56,9 +62,31 @@ public class ContactDetail extends AppCompatActivity {
         nameView = (TextView) findViewById(R.id.contact_name);
         numberView = (TextView) findViewById(R.id.contact_number);
         numberHeader = (TextView) findViewById(R.id.number_header);
+        emailView = (TextView) findViewById(R.id.contact_email);
+        emailHeader = (TextView) findViewById(R.id.email_header);
+        webView = (TextView) findViewById(R.id.contact_web);
+        webHeader = (TextView) findViewById(R.id.web_header);
+        jobView = (TextView) findViewById(R.id.contact_job);
+        jobHeader = (TextView) findViewById(R.id.job_header);
+        snsView = (TextView) findViewById(R.id.contact_sns);
+        snsHeader = (TextView) findViewById(R.id.sns_header);
+        addressView = (TextView) findViewById(R.id.contact_address);
+        addressHeader = (TextView) findViewById(R.id.address_header);
+
         nameView.setText(name);
         numberView.setText(number);
         numberHeader.setText("휴대전화");
+        emailView.setText(email);
+        emailHeader.setText("이메일");
+        webView.setText(web);
+        webHeader.setText("웹사이트");
+        jobView.setText(job);
+        jobHeader.setText("직장");
+        snsView.setText(sns);
+        snsHeader.setText("SNS");
+        addressView.setText(address);
+        addressHeader.setText("주소");
+
         ContactItem contact = (ContactItem) intent.getSerializableExtra("contact");
     }
     @Override
@@ -75,8 +103,18 @@ public class ContactDetail extends AppCompatActivity {
                 Intent getintent = getIntent();
                 String name = (String) getintent.getSerializableExtra("contact_name");
                 String number = (String) getintent.getSerializableExtra("contact_number");
+                String email = (String) getintent.getSerializableExtra("contact_email");
+                String web = (String) getintent.getSerializableExtra("contact_web");
+                String job = (String) getintent.getSerializableExtra("contact_job");
+                String sns = (String) getintent.getSerializableExtra("contact_sns");
+                String address = (String) getintent.getSerializableExtra("contact_address");
                 intent.putExtra("contact_name", name);
                 intent.putExtra("contact_number", number);
+                intent.putExtra("contact_email", email);
+                intent.putExtra("contact_web", web);
+                intent.putExtra("contact_job", job);
+                intent.putExtra("contact_sns", sns);
+                intent.putExtra("contact_address", address);
                 intent.putExtra("contact_id", id);
                 getApplicationContext().startActivity(intent);
                 return true ;

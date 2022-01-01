@@ -7,6 +7,9 @@
         <entry key="app/src/main/res/drawable-hdpi/border.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.253125" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.23333333333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_contact_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_delete_black_24dp.xml" value="0.23425925925925925" />
@@ -18,7 +21,7 @@
         <entry key="app/src/main/res/layout/contact_add.xml" value="0.129981884057971" />
         <entry key="app/src/main/res/layout/contact_edit.xml" value="0.33" />
         <entry key="app/src/main/res/layout/contact_item.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/detail_contact.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/detail_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_contact_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />

@@ -33,7 +33,7 @@ import java.io.IOException;
 
 public class ContactEdit extends AppCompatActivity {
     private Button writeBtn;
-    private EditText nameText, numberText;
+    private EditText nameText, numberText, emailText, webText, jobText, snsText, addressText;
     private int id;
     public static Context mContext;
     private int COUNT = 0;
@@ -53,11 +53,27 @@ public class ContactEdit extends AppCompatActivity {
         Intent getintent = getIntent();
         String name = (String) getintent.getSerializableExtra("contact_name");
         String number = (String) getintent.getSerializableExtra("contact_number");
+        String email = (String) getintent.getSerializableExtra("contact_email");
+        String web = (String) getintent.getSerializableExtra("contact_web");
+        String job = (String) getintent.getSerializableExtra("contact_job");
+        String sns = (String) getintent.getSerializableExtra("contact_sns");
+        String address = (String) getintent.getSerializableExtra("contact_address");
         id = (int) getintent.getSerializableExtra("contact_id");
         nameText = (EditText)findViewById(R.id.edit_name);
         numberText = (EditText)findViewById(R.id.edit_number);
+        emailText = (EditText)findViewById(R.id.edit_email);
+        webText = (EditText)findViewById(R.id.edit_web);
+        jobText = (EditText)findViewById(R.id.edit_job);
+        snsText = (EditText)findViewById(R.id.edit_sns);
+        addressText = (EditText)findViewById(R.id.edit_address);
+
         nameText.setText(name);
         numberText.setText(number);
+        emailText.setText(email);
+        webText.setText(web);
+        jobText.setText(job);
+        snsText.setText(sns);
+        addressText.setText(address);
 
         obj = new JSONObject();
         mContext = this;
@@ -74,7 +90,8 @@ public class ContactEdit extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_complete:
-                JSONArray jArray = editData(nameText.getText().toString(), numberText.getText().toString(), id);
+                JSONArray jArray = editData(nameText.getText().toString(), numberText.getText().toString(), emailText.getText().toString(),
+                        webText.getText().toString(), jobText.getText().toString(), snsText.getText().toString(), addressText.getText().toString(), id);
 
                 try {
                     obj.put("contact", jArray);//배열을 넣음
@@ -92,25 +109,58 @@ public class ContactEdit extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public JSONArray editData(String name, String number, int id) {
+    public JSONArray editData(String name, String number, String email, String web, String job, String sns, String address, int id) {
         String fileTitle = "contact.json";
         File file = new File(getFilesDir(), fileTitle);
         String json = readFile();
         try {
+            int pos = 0;
+            int newpos = -1;
+            int cnt = 0;
             JSONArray oldJson = jsonParsing(json);
+            JSONArray t = new JSONArray();
+            JSONArray newJson = new JSONArray();
+            JSONObject sObject = new JSONObject();
             for(int i = 0; i < oldJson.length(); i++) {
                 if(oldJson.getJSONObject(i).getInt("id") == id) {
                     System.out.println("foundit!");
-                    oldJson.getJSONObject(i).put("name", name);
-                    oldJson.getJSONObject(i).put("number", number);
+                    pos = i;
+                    sObject.put("name", name);
+                    sObject.put("number", number);
+                    sObject.put("email", email);
+                    sObject.put("web", web);
+                    sObject.put("job", job);
+                    sObject.put("sns", sns);
+                    sObject.put("address", address);
+                    sObject.put("id", id);
+                    continue;
+                }
+                t.put(oldJson.getJSONObject(i));
+            }
+
+            for(int i = 0; i < t.length(); i++) {
+                if(t.getJSONObject(i).getString("name").compareTo(sObject.getString("name")) >= 0) {
+                    newpos = i;
+                    newJson.put(i, sObject);
                     break;
+                }
+                newJson.put(i, t.getJSONObject(i));
+            }
+
+            if (newpos == -1) {
+                newpos = t.length() - 1;
+                newJson.put(newpos + 1, sObject);
+            }
+            else {
+                for (int j = newpos + 1; j <= t.length(); j++) {
+                    newJson.put(j, t.getJSONObject(j - 1));
                 }
             }
 //            ContactItem newContact = new ContactItem(name, number);
             //COUNT변수 정수형에서 문자형으로 변환 후 JSONObject에 입력
 
             //JSONObject to JSONArray
-            return oldJson;
+            return newJson;
 
         } catch (JSONException e) {
             e.printStackTrace();

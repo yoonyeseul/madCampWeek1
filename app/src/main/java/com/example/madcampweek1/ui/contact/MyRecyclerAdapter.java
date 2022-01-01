@@ -111,6 +111,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ho
 //                        intent.putExtra("contact", item);
                         intent.putExtra("contact_name", item.name);
                         intent.putExtra("contact_number", item.number);
+                        intent.putExtra("contact_email", item.email);
+                        intent.putExtra("contact_web", item.web);
+                        intent.putExtra("contact_job", item.job);
+                        intent.putExtra("contact_sns", item.sns);
+                        intent.putExtra("contact_address", item.address);
                         intent.putExtra("contact_id", item.id);
                         context.startActivity(intent);
                         ((Activity) context).overridePendingTransition(R.anim.slide_left2, R.anim.slide_left);

@@ -27,8 +27,7 @@ import java.util.ArrayList;
 
 public class ContactAdd extends AppCompatActivity {
     private Button writeBtn;
-    private EditText nameText, numberText;
-
+    private EditText nameText, numberText, emailText, webText, jobText, snsText, addressText;
 
     private int COUNT = 0;
     private JSONObject obj = null;
@@ -45,7 +44,11 @@ public class ContactAdd extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         nameText = (EditText)findViewById(R.id.edit_name);
         numberText = (EditText)findViewById(R.id.edit_number);
-
+        emailText = (EditText)findViewById(R.id.edit_email);
+        webText = (EditText)findViewById(R.id.edit_web);
+        jobText = (EditText)findViewById(R.id.edit_job);
+        snsText = (EditText)findViewById(R.id.edit_sns);
+        addressText = (EditText)findViewById(R.id.edit_address);
 
         obj = new JSONObject();
 
@@ -65,8 +68,8 @@ public class ContactAdd extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_complete:
-                JSONArray jArray = insertData(nameText.getText().toString(), numberText.getText().toString());
-
+                JSONArray jArray = insertData(nameText.getText().toString(), numberText.getText().toString(), emailText.getText().toString(),
+                        webText.getText().toString(), jobText.getText().toString(), snsText.getText().toString(), addressText.getText().toString());
                 try {
                     obj.put("contact", jArray);//배열을 넣음
                     obj.put("count", COUNT);
@@ -83,25 +86,55 @@ public class ContactAdd extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public JSONArray insertData(String name, String number){
+    public JSONArray insertData(String name, String number, String email, String web, String job, String sns, String address){
         COUNT++; //입력한 데이터가 몇개인지 카운트하는 변수, 없어도 무관
         String fileTitle = "contact.json";
         File file = new File(getFilesDir(), fileTitle);
         String json = readFile();
         try {
             JSONArray oldJson = jsonParsing(json);
+
+            JSONArray newJson = new JSONArray();
             JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
-            JSONArray jArray = new JSONArray();
-//            ContactItem newContact = new ContactItem(name, number);
+//           ContactItem newContact = new ContactItem(name, number);
             //COUNT변수 정수형에서 문자형으로 변환 후 JSONObject에 입력
-            COUNT = COUNT+1;
-            sObject.put("id", COUNT);
+            COUNT = COUNT + 1;
+            int pos = -1;
             sObject.put("name", name);
             sObject.put("number", number);
+            sObject.put("email", email);
+            sObject.put("web", web);
+            sObject.put("job", job);
+            sObject.put("sns", sns);
+            sObject.put("address", address);
+            sObject.put("id", COUNT);
+            if (oldJson.length() == 0) {
+                oldJson.put(sObject);
+                return oldJson;
+            }
+            for (int i = 0; i < oldJson.length(); i++) {
+
+                if (oldJson.getJSONObject(i).getString("name").compareTo(sObject.getString("name")) >= 0) {
+                    pos = i;
+                    newJson.put(i, sObject);
+                    break;
+                }
+                newJson.put(i, oldJson.getJSONObject(i));
+            }
+            System.out.println(newJson);
+            if (pos == -1) {
+                pos = oldJson.length() - 1;
+                newJson.put(pos + 1, sObject);
+            }
+            else {
+                for (int j = pos + 1; j <= oldJson.length(); j++) {
+                    newJson.put(j, oldJson.getJSONObject(j - 1));
+                }
+            }
 
 
             //JSONObject to JSONArray
-            return oldJson.put(sObject);
+            return newJson;
 
         } catch (JSONException e) {
             e.printStackTrace();
