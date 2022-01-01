@@ -11,9 +11,18 @@
         android:id="@+id/toolbar_edit"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/purple_500"
-        app:titleTextColor="@color/white"
-        />
+        android:background="@color/background_gray"
+        app:titleTextColor="@color/blue"
+        >
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/blue"
+            android:layout_gravity="center"
+            />
+    </androidx.appcompat.widget.Toolbar>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

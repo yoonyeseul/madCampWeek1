@@ -1,12 +1,17 @@
 package com.example.madcampweek1.ui.contact;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.text.TextWatcher;
 import android.text.Editable;
@@ -48,7 +53,6 @@ public class ContactFragment extends Fragment {
 //        editText.addTextChangedListener(this);
 //        String json = getJsonString(getActivity().getApplicationContext());
         String json = getJsonString();
-        System.out.println(json);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         mcontactItems = ContactItem.createContactList(json);
         mRecyclerView.setHasFixedSize(true);
@@ -71,12 +75,16 @@ public class ContactFragment extends Fragment {
 
             }
         });
+
         Button addButton = rootView.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ContactAdd.class);
+                ((Activity) getActivity()).overridePendingTransition(R.anim.slide_left2, R.anim.slide_left);
                 startActivity(intent);
+                getActivity().finish();
+
             }
 
         });

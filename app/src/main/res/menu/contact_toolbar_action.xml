@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/contact_delete"
-        android:icon="@drawable/ic_baseline_delete_24"
-        android:title="Search"
+        android:icon="@drawable/ic_baseline_delete_outline_24"
+        app:iconTint="@color/red"
+        android:title="delete"
         app:showAsAction="always"/>
     <item
         android:id="@+id/contact_edit"
         android:icon="@drawable/ic_baseline_edit_24"
-        android:title="Search"
+        android:title="edit"
+        app:iconTint="@color/blue"
         app:showAsAction="always"/>
 
 </menu>

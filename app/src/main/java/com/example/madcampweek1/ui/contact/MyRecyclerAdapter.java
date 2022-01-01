@@ -3,6 +3,7 @@ package com.example.madcampweek1.ui.contact;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.AbstractCursor;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +106,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ho
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION) {
-                        ContactItem item = list.get(pos);
+                        ContactItem item = filteredList.get(pos);
                         Intent intent = new Intent(context, ContactDetail.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 //                        intent.putExtra("contact", item);
@@ -118,6 +119,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ho
                         intent.putExtra("contact_address", item.address);
                         intent.putExtra("contact_id", item.id);
                         context.startActivity(intent);
+                        ((Activity) context).finish();
                         ((Activity) context).overridePendingTransition(R.anim.slide_left2, R.anim.slide_left);
                     }
                 }

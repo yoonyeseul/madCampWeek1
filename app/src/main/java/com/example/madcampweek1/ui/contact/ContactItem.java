@@ -124,9 +124,7 @@ public class ContactItem {
                 ContactItem contact = new ContactItem(contactObject.getString("name"), contactObject.getString("number"),
                         contactObject.getString("email"), contactObject.getString("web"), contactObject.getString("job"),
                         contactObject.getString("sns"), contactObject.getString("address"), contactObject.getInt("id"));
-                System.out.println("지금부터 연락처 정보 나올거임" + i);
-                System.out.println(contact);
-                System.out.println("지금부터 연락처 정보 나올거임" + i);
+
                 contactList.add(contact);
             }
             return contactList;

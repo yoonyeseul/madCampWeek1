@@ -4,6 +4,8 @@
     <item
         android:id="@+id/edit_complete"
         android:title="완료"
+        android:icon="@drawable/ic_baseline_done_24"
+        app:iconTint="@color/green"
         app:showAsAction="always"/>
 
 </menu>

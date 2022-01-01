@@ -4,13 +4,78 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/purple_500"
-        app:titleTextColor="@color/white"
-        />
+        android:layout_height="wrap_content"
+        android:background="@color/background_gray"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_gray"
+            app:titleTextColor="@color/blue">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="연락처"
+                android:textColor="@color/blue"
+                android:textSize="18dp"
+                android:gravity="start"/>
+
+        </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:id="@+id/contact_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/background_gray">
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/item_layout"
+            android:gravity="center">
+            <Button
+                android:id="@+id/call"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:background="@drawable/ic_baseline_call_24"
+                app:backgroundTint="@color/blue"
+                android:padding="12dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/item_layout"
+            android:gravity="center">
+            <Button
+                android:id="@+id/send_message"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:background="@drawable/ic_baseline_message_24"
+                app:backgroundTint="@color/blue"
+                android:padding="12dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,17 +83,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F3F3F3"
+            android:background="@color/background_gray"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/contact_name"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:textSize="30dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,8 +106,9 @@
                     android:id="@+id/contact_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autoLink="phone"
                     android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,6 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="휴대전화"
+                    android:autoLink="email"
                     android:textColor="@color/black"
                     android:textSize="18dp"
                     />
@@ -73,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,7 +155,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:autoLink="web"
+                    android:textColor="@color/text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -165,7 +225,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text"/>
             </LinearLayout>
         </LinearLayout>
 
