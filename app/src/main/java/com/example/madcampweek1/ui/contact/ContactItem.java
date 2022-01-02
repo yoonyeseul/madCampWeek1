@@ -17,12 +17,23 @@ import org.json.JSONObject;
 public class ContactItem {
     String name;
     String number;
+    String email;
+    String web;
+    String job;
+    String sns;
+    String address;
     int id;
 //    int resourceId;
 
-    public ContactItem(String name, String number, int id) {
+    public ContactItem(String name, String number, String email, String web, String job,String sns, String address, int id) {
         this.name = name;
         this.number = number;
+        this.email = email;
+        this.web = web;
+        this.job = job;
+        this.sns = sns;
+        this.address = address;
+
         this.id = id;
     }
 //
@@ -110,7 +121,9 @@ public class ContactItem {
             {
                 JSONObject contactObject = contactArray.getJSONObject(i);
 
-                ContactItem contact = new ContactItem(contactObject.getString("name"), contactObject.getString("number"), contactObject.getInt("id"));
+                ContactItem contact = new ContactItem(contactObject.getString("name"), contactObject.getString("number"),
+                        contactObject.getString("email"), contactObject.getString("web"), contactObject.getString("job"),
+                        contactObject.getString("sns"), contactObject.getString("address"), contactObject.getInt("id"));
 
                 contactList.add(contact);
             }

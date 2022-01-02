@@ -1,11 +1,15 @@
 package com.example.madcampweek1.ui.contact;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +35,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ContactDetail extends AppCompatActivity {
-    TextView nameView, numberView, numberHeader;
+    TextView nameView, numberView, numberHeader, emailView, emailHeader, webView,
+            webHeader, jobView, jobHeader, snsView, snsHeader, addressView, addressHeader;
     int id;
     int COUNT;
     @Override
@@ -41,24 +46,69 @@ public class ContactDetail extends AppCompatActivity {
         Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("연락처 세부정보");
         ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        ab.setDisplayShowTitleEnabled(false);
 ////        TextView textView = findViewById(R.id.contact_name);
 //        getSupportActionBar().setTitle("연락처 부정보");
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         String name = (String) intent.getSerializableExtra("contact_name");
         String number = (String) intent.getSerializableExtra("contact_number");
+        String email = (String) intent.getSerializableExtra("contact_email");
+        String web = (String) intent.getSerializableExtra("contact_web");
+        String job = (String) intent.getSerializableExtra("contact_job");
+        String sns = (String) intent.getSerializableExtra("contact_sns");
+        String address = (String) intent.getSerializableExtra("contact_address");
 
         id = (int) intent.getSerializableExtra("contact_id");
+        Button callButton = findViewById(R.id.call);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tt = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+number));
+                startActivity(tt);
+            }
 
+        });
+        Button messageButton = findViewById(R.id.send_message);
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tt = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:"+number));
+                startActivity(tt);
+            }
+
+        });
 //        ContactItem contact = new ContactItem(name, number);
         nameView = (TextView) findViewById(R.id.contact_name);
         numberView = (TextView) findViewById(R.id.contact_number);
         numberHeader = (TextView) findViewById(R.id.number_header);
+        emailView = (TextView) findViewById(R.id.contact_email);
+        emailHeader = (TextView) findViewById(R.id.email_header);
+        webView = (TextView) findViewById(R.id.contact_web);
+        webHeader = (TextView) findViewById(R.id.web_header);
+        jobView = (TextView) findViewById(R.id.contact_job);
+        jobHeader = (TextView) findViewById(R.id.job_header);
+        snsView = (TextView) findViewById(R.id.contact_sns);
+        snsHeader = (TextView) findViewById(R.id.sns_header);
+        addressView = (TextView) findViewById(R.id.contact_address);
+        addressHeader = (TextView) findViewById(R.id.address_header);
+
         nameView.setText(name);
         numberView.setText(number);
         numberHeader.setText("휴대전화");
+        emailView.setText(email);
+        emailHeader.setText("이메일");
+        webView.setText(web);
+        webHeader.setText("웹사이트");
+        jobView.setText(job);
+        jobHeader.setText("직장");
+        snsView.setText(sns);
+        snsHeader.setText("SNS");
+        addressView.setText(address);
+        addressHeader.setText("주소");
+
         ContactItem contact = (ContactItem) intent.getSerializableExtra("contact");
     }
     @Override
@@ -70,32 +120,54 @@ public class ContactDetail extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                System.out.println("11111");
+                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                finish();
+                startActivity(intent1);
+                overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
+
+                return true;
             case R.id.contact_edit :
                 Intent intent = new Intent(getApplicationContext(), ContactEdit.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Intent getintent = getIntent();
                 String name = (String) getintent.getSerializableExtra("contact_name");
                 String number = (String) getintent.getSerializableExtra("contact_number");
+                String email = (String) getintent.getSerializableExtra("contact_email");
+                String web = (String) getintent.getSerializableExtra("contact_web");
+                String job = (String) getintent.getSerializableExtra("contact_job");
+                String sns = (String) getintent.getSerializableExtra("contact_sns");
+                String address = (String) getintent.getSerializableExtra("contact_address");
                 intent.putExtra("contact_name", name);
                 intent.putExtra("contact_number", number);
+                intent.putExtra("contact_email", email);
+                intent.putExtra("contact_web", web);
+                intent.putExtra("contact_job", job);
+                intent.putExtra("contact_sns", sns);
+                intent.putExtra("contact_address", address);
                 intent.putExtra("contact_id", id);
+                finish();
                 getApplicationContext().startActivity(intent);
+
+                overridePendingTransition(R.anim.slide_left2, R.anim.slide_left);
                 return true ;
             case R.id.contact_delete :
 
                 ContactEdit c = ((ContactEdit) ContactEdit.mContext);
-                System.out.println(id);
 
 //                COUNT = ((ContactEdit) ContactEdit.mContext).getCOUNT();
                 JSONArray jArray = deleteData(id);
-                System.out.println("삭제 눌림");
-                System.out.println(jArray);
+
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("contact", jArray);
                     obj.put("count", COUNT);
                     writeFile(obj);
                     Intent delIntent = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    finish();
                     getApplicationContext().startActivity(delIntent);
+                    overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
+
                     return true;
                 } catch (JSONException e) {
                     e.printStackTrace();

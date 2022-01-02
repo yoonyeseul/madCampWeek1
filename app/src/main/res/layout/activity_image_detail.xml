@@ -26,7 +26,7 @@
             android:layout_height="20sp"
             android:layout_marginStart="32dp"
             android:background="@drawable/ic_arrow_back"
-            app:backgroundTint="#333333"
+            app:backgroundTint="#A5A5A5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
             android:layout_height="25sp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/ic_baseline_delete_outline_24"
-            app:backgroundTint="#444444"
+            app:backgroundTint="#bc001e"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
