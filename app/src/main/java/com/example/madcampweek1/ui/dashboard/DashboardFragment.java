@@ -230,10 +230,12 @@ public class DashboardFragment extends Fragment {
     }
 
     private File[] getSortedNameList(File[] fList) {
-        File[] ret = new File[fList.length];
+        Vector<File> tmp = new Vector<File>();
         for (int i = 0; i < fList.length; i++) {
-            ret[i] = fList[i];
+            if (isImageName(fList[i].getName()))
+                tmp.add(fList[i]);
         }
+        File[] ret = tmp.toArray(new File[tmp.size()]);
         Arrays.sort(ret, new Comparator<File>() {
             @Override
             public int compare(File o1, File o2) {
@@ -242,6 +244,12 @@ public class DashboardFragment extends Fragment {
             }
         });
         return ret;
+    }
+
+    private boolean isImageName(String name) {
+        if (name.substring(0, 5).equals("image"))
+            return true;
+        return false;
     }
 
     private int getImageIdxFromName(String name) {

@@ -1,10 +1,16 @@
 package com.example.madcampweek1.ui.notifications;
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,8 +24,12 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.madcampweek1.R;
 import com.example.madcampweek1.databinding.FragmentNotificationsBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class NotificationsFragment extends Fragment {
 
@@ -27,6 +37,10 @@ public class NotificationsFragment extends Fragment {
     private FragmentNotificationsBinding binding;
     CalendarView calendarView;
     ViewPager2 viewPager;
+    TextView dateTextView;
+    String selectedDate;
+
+    FloatingActionButton floatingActionButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,20 +60,53 @@ public class NotificationsFragment extends Fragment {
         ).attach();
 
         calendarView = binding.calendarView;
-        someFuncionOfCalender();
+        someFunctionOfCalender();
+
+        floatingActionButton = binding.floatingActionButton;
+        someFuncOfFloatingBtn();
+
+        setDateTextView();
 
         return root;
     }
 
-    private void someFuncionOfCalender() {
+    private void setDateTextView() {
+        dateTextView = binding.dateTextView;
+        String currentDate = convertDateToString(calendarView.getDate());
+        dateTextView.setText(currentDate);
+        selectedDate = currentDate;
+    }
+
+    public static String convertDateToString(long date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.DD");
+        return sdf.format(date);
+    }
+
+    private void someFunctionOfCalender() {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() // 날짜 선택 이벤트
         {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
             {
-                String date = year + "/" + (month + 1) + "/" + dayOfMonth;
-                System.out.println("selected Item: "+ viewPager.getCurrentItem());
-//                whenDate.setText(date); // 선택한 날짜로 설정
+                String text = year + "." + (month / 10 == 0 ? "0" : "") + (month + 1) + "."
+                        + (dayOfMonth / 10 == 0 ? "0" : "") + dayOfMonth;
+                selectedDate = text;
+                dateTextView.setText(selectedDate);
+            }
+        });
+    }
+
+    private void someFuncOfFloatingBtn() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                if (viewPager.getCurrentItem() == 0)
+                    intent = new Intent(getActivity(), TodoActivity.class);
+                else
+                    intent = new Intent(getActivity(), DiaryActivity.class);
+                intent.putExtra("date", selectedDate);
+                startActivity(intent);
             }
         });
     }
