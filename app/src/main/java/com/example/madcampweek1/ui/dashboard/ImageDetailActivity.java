@@ -36,21 +36,11 @@ public class ImageDetailActivity extends AppCompatActivity {
 
         imageId = getIntent().getIntExtra("imageIdx", 0);
 
-//        Toast.makeText(this, "인덱스: " + getIntent().getIntExtra("imageIdx", 0), Toast.LENGTH_LONG).show();
-
         String imgpath = getCacheDir() + "/" + "image" + imageId;
         Bitmap bm = BitmapFactory.decodeFile(imgpath);
 
-//        ImageView imageView = new ImageView(this);
-//        imageView.setImageBitmap(bm);
-
         PhotoView imageView = (PhotoView) findViewById(R.id.photo_view);
         imageView.setImageBitmap(bm);
-
-//        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-//        imageView.setLayoutParams(lp);
-//        ((ConstraintLayout) findViewById(R.id.constraintLayout)).addView(imageView);
-
 
         Button btn = findViewById(R.id.backButton);
         btn.setOnClickListener(new View.OnClickListener() {

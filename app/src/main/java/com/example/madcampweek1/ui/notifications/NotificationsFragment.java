@@ -1,6 +1,5 @@
 package com.example.madcampweek1.ui.notifications;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -12,11 +11,13 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -28,6 +29,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -41,6 +48,11 @@ public class NotificationsFragment extends Fragment {
     String selectedDate;
 
     FloatingActionButton floatingActionButton;
+
+    ToDoFragment toDoFragment = new ToDoFragment();
+    DiaryFragment diaryFragment = new DiaryFragment();
+
+    public static boolean 텍스트가_바뀌었는지 = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,44 +71,40 @@ public class NotificationsFragment extends Fragment {
                 (tab, position) -> tab.setText(position == 0 ? "To-do" : "diary")
         ).attach();
 
-        calendarView = binding.calendarView;
-        someFunctionOfCalender();
-
-        floatingActionButton = binding.floatingActionButton;
-        someFuncOfFloatingBtn();
-
+        setCalendarListener();
+        setFloatingBtnListener();
         setDateTextView();
+        initTodoAndDiaryText();
 
         return root;
     }
 
-    private void setDateTextView() {
-        dateTextView = binding.dateTextView;
-        String currentDate = convertDateToString(calendarView.getDate());
-        dateTextView.setText(currentDate);
-        selectedDate = currentDate;
-    }
-
-    public static String convertDateToString(long date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.DD");
-        return sdf.format(date);
-    }
-
-    private void someFunctionOfCalender() {
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() // 날짜 선택 이벤트
-        {
+    private void setCalendarListener() {
+        calendarView = binding.calendarView;
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth)
-            {
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 String text = year + "." + (month / 10 == 0 ? "0" : "") + (month + 1) + "."
                         + (dayOfMonth / 10 == 0 ? "0" : "") + dayOfMonth;
                 selectedDate = text;
                 dateTextView.setText(selectedDate);
+
+                diaryFragment.setDiaryText(getDiaryText());
             }
         });
     }
 
-    private void someFuncOfFloatingBtn() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (텍스트가_바뀌었는지 == true) {
+            diaryFragment.setDiaryText(getDiaryText());
+            텍스트가_바뀌었는지 = false;
+        }
+    }
+
+    private void setFloatingBtnListener() {
+        floatingActionButton = binding.floatingActionButton;
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +119,48 @@ public class NotificationsFragment extends Fragment {
         });
     }
 
+    private void setDateTextView() {
+        dateTextView = binding.dateTextView;
+        String currentDate = convertDateToString(calendarView.getDate());
+        dateTextView.setText(currentDate);
+        selectedDate = currentDate;
+    }
+
+    public static String convertDateToString(long date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.DD");
+        return sdf.format(date);
+    }
+
+    public void initTodoAndDiaryText() {
+        diaryFragment.text = getDiaryText();
+    }
+
+    private String getDiaryText() {
+        try {
+            JSONObject obj = new JSONObject(readFile());
+            String currentDiary = obj.getString(selectedDate);
+            return currentDiary;
+        } catch (Exception e) {
+            return "일기를 작성해주세요";
+        }
+    }
+
+    public String readFile() {
+        File file = new File(getActivity().getFilesDir(), "diary.json");
+        String result = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result += line;
+            }
+            reader.close();
+            return result;
+        } catch (Exception e) {
+        }
+        return result;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -118,21 +168,23 @@ public class NotificationsFragment extends Fragment {
     }
 
     public class PagerAdapter extends FragmentStateAdapter {
+        final private int itemCount = 2;
+
         public PagerAdapter(FragmentActivity fa) {
             super(fa);
         }
 
         @Override
         public Fragment createFragment(int position) {
-            int idx = position % 2;
+            int idx = position % itemCount;
             if (idx == 0)
-                return new ToDoFragment();
-            return new DiaryFragment();
+                return toDoFragment;
+            return diaryFragment;
         }
 
         @Override
         public int getItemCount() {
-            return 2;
+            return itemCount;
         }
     }
 }
