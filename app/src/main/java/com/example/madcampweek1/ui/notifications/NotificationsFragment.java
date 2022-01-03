@@ -148,9 +148,11 @@ public class NotificationsFragment extends Fragment {
     }
 
     public String readFile() {
-        File file = new File(getActivity().getFilesDir(), "diary.json");
+        File file = new File(getContext().getFilesDir(), "diary.json");
         String result = "";
         try {
+            if (!file.exists())
+                file.createNewFile();
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -161,7 +163,6 @@ public class NotificationsFragment extends Fragment {
         } catch (Exception e) {
             System.out.println("readFile() Exception 발생");
         }
-        System.out.println("readFile result: " + result); // 내 에뮬레이터에서 이 코드가 호출되는 이유 ..?
         return result;
     }
 

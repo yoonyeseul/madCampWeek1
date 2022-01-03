@@ -69,7 +69,8 @@ public class DiaryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    JSONObject obj = new JSONObject(readFile());
+                    String tmp = readFile();
+                    JSONObject obj = tmp.length() == 0 ? new JSONObject() : new JSONObject(tmp);
                     obj.put(diaryDate, diaryText.getText().toString());
                     writeFile(obj);
                 } catch (Exception e) {
@@ -84,6 +85,8 @@ public class DiaryActivity extends AppCompatActivity {
         File file = new File(getFilesDir(), "diary.json");
         String result = "";
         try {
+            if (!file.exists())
+                file.createNewFile();
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
