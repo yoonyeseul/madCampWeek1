@@ -2,19 +2,28 @@ package com.example.madcampweek1.ui.notifications;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.madcampweek1.R;
 import com.example.madcampweek1.databinding.FragmentNotificationsBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -22,11 +31,13 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class NotificationsFragment extends Fragment {
 
@@ -60,6 +71,7 @@ public class NotificationsFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(position == 0 ? "To-do" : "diary")
         ).attach();
+
         setCalendarListener();
         setFloatingBtnListener();
         setDateTextView();
@@ -78,6 +90,12 @@ public class NotificationsFragment extends Fragment {
                 selectedDate = text;
                 dateTextView.setText(selectedDate);
                 toDoFragment.setNewDate(selectedDate);
+
+                String dateText = (month / 10 == 0 ? "0" : "") + (month + 1) + "."
+                        + (dayOfMonth / 10 == 0 ? "0" : "") + dayOfMonth;
+                dateTextView.setText(dateText + ".");
+                TextView yearTextView = binding.yearTextView;
+                yearTextView.setText("" + year);
                 initTodoAndDiaryText();
             }
         });
@@ -88,7 +106,7 @@ public class NotificationsFragment extends Fragment {
         super.onResume();
         if (textToChange == true) {
             textToChange = false;
-            diaryFragment.setDiaryText(getDiaryText());
+            diaryFragment.setDiaryText(getContext(), selectedDate);
             toDoFragment.setNewDate(selectedDate);
         }
     }
@@ -111,50 +129,23 @@ public class NotificationsFragment extends Fragment {
 
     private void setDateTextView() {
         dateTextView = binding.dateTextView;
-        String currentDate = convertDateToString(calendarView.getDate());
-        dateTextView.setText(currentDate);
-        selectedDate = currentDate;
-    }
+        SimpleDateFormat sdf = new SimpleDateFormat("MM.DD");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("YYYY");
+        String date = sdf.format(calendarView.getDate());
+        String year = sdf2.format(calendarView.getDate());
 
-    public static String convertDateToString(long date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.DD");
-        return sdf.format(date);
+        dateTextView.setText(date + ".");
+
+        TextView yearTextView = binding.yearTextView;
+        yearTextView.setText(year);
+
+        selectedDate = year + "." + date;
     }
 
     public void initTodoAndDiaryText() {
-        diaryFragment.setDiaryText(getDiaryText());
+        diaryFragment.setDiaryText(getContext(), selectedDate);
         toDoFragment.setContext(getContext());
         toDoFragment.setDate(selectedDate);
-    }
-
-    private String getDiaryText() {
-        String currentDiary = "일기를 작성해주세요";
-        try {
-            JSONObject obj = new JSONObject(readFile());
-            currentDiary = obj.getString(selectedDate);
-        } catch (JSONException e) {
-        }
-        System.out.println("currentDiary : " + currentDiary);
-        return currentDiary;
-    }
-
-    public String readFile() {
-        File file = new File(getContext().getFilesDir(), "diary.json");
-        String result = "";
-        try {
-            if (!file.exists())
-                file.createNewFile();
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result += line;
-            }
-            reader.close();
-            return result;
-        } catch (Exception e) {
-            System.out.println("readFile() Exception 발생");
-        }
-        return result;
     }
 
     @Override

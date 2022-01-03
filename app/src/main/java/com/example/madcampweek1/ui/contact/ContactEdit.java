@@ -101,16 +101,16 @@ public class ContactEdit extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent1 = new Intent(getApplicationContext(), ContactDetail.class);
-                intent1.putExtra("contact_name", name);
-                intent1.putExtra("contact_number", number);
-                intent1.putExtra("contact_email", email);
-                intent1.putExtra("contact_web", web);
-                intent1.putExtra("contact_job", job);
-                intent1.putExtra("contact_sns", sns);
-                intent1.putExtra("contact_address", address);
-                intent1.putExtra("contact_id", id);
-                startActivity(intent1);
+//                Intent intent1 = new Intent(getApplicationContext(), ContactDetail.class);
+//                intent1.putExtra("contact_name", name);
+//                intent1.putExtra("contact_number", number);
+//                intent1.putExtra("contact_email", email);
+//                intent1.putExtra("contact_web", web);
+//                intent1.putExtra("contact_job", job);
+//                intent1.putExtra("contact_sns", sns);
+//                intent1.putExtra("contact_address", address);
+//                intent1.putExtra("contact_id", id);
+//                startActivity(intent1);
                 ((Activity) this).overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
                 finish();
                 return true;
@@ -126,16 +126,19 @@ public class ContactEdit extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(getApplicationContext(), ContactDetail.class);
-                intent.putExtra("contact_name", nameText.getText().toString());
-                intent.putExtra("contact_number", numberText.getText().toString());
-                intent.putExtra("contact_email", emailText.getText().toString());
-                intent.putExtra("contact_web", webText.getText().toString());
-                intent.putExtra("contact_job", jobText.getText().toString());
-                intent.putExtra("contact_sns", snsText.getText().toString());
-                intent.putExtra("contact_address", addressText.getText().toString());
-                intent.putExtra("contact_id", id);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), ContactDetail.class);
+//                intent.putExtra("contact_name", nameText.getText().toString());
+//                intent.putExtra("contact_number", numberText.getText().toString());
+//                intent.putExtra("contact_email", emailText.getText().toString());
+//                intent.putExtra("contact_web", webText.getText().toString());
+//                intent.putExtra("contact_job", jobText.getText().toString());
+//                intent.putExtra("contact_sns", snsText.getText().toString());
+//                intent.putExtra("contact_address", addressText.getText().toString());
+//                intent.putExtra("contact_id", id);
+//                startActivity(intent);
+                ContactDetail.setTheItems(new String[]{nameText.getText().toString(),numberText.getText().toString(),
+                        emailText.getText().toString(),webText.getText().toString(),jobText.getText().toString(),
+                        snsText.getText().toString(),addressText.getText().toString()});
                 ((Activity) this).overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
                 finish();
 

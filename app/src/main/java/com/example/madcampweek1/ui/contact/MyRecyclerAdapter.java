@@ -119,7 +119,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ho
                         intent.putExtra("contact_address", item.address);
                         intent.putExtra("contact_id", item.id);
                         context.startActivity(intent);
-                        ((Activity) context).finish();
+//                        ((Activity) context).finish();
                         ((Activity) context).overridePendingTransition(R.anim.slide_left2, R.anim.slide_left);
                     }
                 }

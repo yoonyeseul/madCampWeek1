@@ -78,8 +78,8 @@ public class ContactAdd extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent1);
+//                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent1);
                 finish();
                 ((Activity) this).overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
 
@@ -95,8 +95,8 @@ public class ContactAdd extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                getApplicationContext().startActivity(intent);
                 finish();
                 ((Activity) this).overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
 

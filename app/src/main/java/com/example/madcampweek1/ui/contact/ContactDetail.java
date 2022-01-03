@@ -117,13 +117,33 @@ public class ContactDetail extends AppCompatActivity {
 
         return true ;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (tmp == null) return;
+        nameView.setText(tmp[0]);
+        numberView.setText(tmp[1]);
+        emailView.setText(tmp[2]);
+        webView.setText(tmp[3]);
+        jobView.setText(tmp[4]);
+        snsView.setText(tmp[5]);
+        addressView.setText(tmp[6]);
+        tmp = null;
+    }
+    private static String[] tmp;
+
+    public static void setTheItems(String[] param){// name, String number, String email, String web, String job, String sns, String address) {
+        tmp = param;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+//                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                 finish();
-                startActivity(intent1);
+//                startActivity(intent1);
                 overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
 
                 return true;
@@ -145,7 +165,7 @@ public class ContactDetail extends AppCompatActivity {
                 intent.putExtra("contact_sns", sns);
                 intent.putExtra("contact_address", address);
                 intent.putExtra("contact_id", id);
-                finish();
+//                finish();
                 getApplicationContext().startActivity(intent);
 
                 overridePendingTransition(R.anim.slide_left2, R.anim.slide_left);
@@ -162,9 +182,9 @@ public class ContactDetail extends AppCompatActivity {
                     obj.put("contact", jArray);
                     obj.put("count", COUNT);
                     writeFile(obj);
-                    Intent delIntent = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    Intent delIntent = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     finish();
-                    getApplicationContext().startActivity(delIntent);
+//                    getApplicationContext().startActivity(delIntent);
                     overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
 
                     return true;

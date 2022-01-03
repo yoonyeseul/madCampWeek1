@@ -83,7 +83,7 @@ public class ContactFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ContactAdd.class);
                 ((Activity) getActivity()).overridePendingTransition(R.anim.slide_left2, R.anim.slide_left);
                 startActivity(intent);
-                getActivity().finish();
+//                getActivity().finish();
 
             }
 
@@ -94,6 +94,18 @@ public class ContactFragment extends Fragment {
 
     }
 
+    private boolean tmp = false;
+    @Override
+    public void onResume() {
+        super.onResume();
+
+//        if (tmp == false) { tmp = true; return; }
+        String json = getJsonString();
+        mcontactItems = ContactItem.createContactList(json);
+        mRecyclerAdapter = new MyRecyclerAdapter(getActivity(), this.mcontactItems);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mRecyclerAdapter);
+    }
 
     private String getJsonString() {
 
