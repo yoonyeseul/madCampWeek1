@@ -74,7 +74,7 @@ public class DiaryActivity extends AppCompatActivity {
                     writeFile(obj);
                 } catch (Exception e) {
                 }
-                NotificationsFragment.텍스트가_바뀌었는지 = true;
+                NotificationsFragment.textToChange = true;
                 finish();
             }
         });

@@ -29,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -52,7 +53,7 @@ public class NotificationsFragment extends Fragment {
     ToDoFragment toDoFragment = new ToDoFragment();
     DiaryFragment diaryFragment = new DiaryFragment();
 
-    public static boolean 텍스트가_바뀌었는지 = false;
+    public static boolean textToChange = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -89,7 +90,8 @@ public class NotificationsFragment extends Fragment {
                 selectedDate = text;
                 dateTextView.setText(selectedDate);
 
-                diaryFragment.setDiaryText(getDiaryText());
+                initTodoAndDiaryText();
+//                diaryFragment.setDiaryText(getDiaryText()); // (view 만들어지기 전 날짜 선택하는 경우 text 안 바뀜)
             }
         });
     }
@@ -97,9 +99,9 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (텍스트가_바뀌었는지 == true) {
+        if (textToChange == true) {
+            textToChange = false;
             diaryFragment.setDiaryText(getDiaryText());
-            텍스트가_바뀌었는지 = false;
         }
     }
 
@@ -132,17 +134,23 @@ public class NotificationsFragment extends Fragment {
     }
 
     public void initTodoAndDiaryText() {
-        diaryFragment.text = getDiaryText();
+        if (diaryFragment.root == null) {
+            diaryFragment.text = getDiaryText();
+            System.out.println("루트가 null. . .. ... . .... .. .. . .. ...... .. .");
+        }
+        else
+            diaryFragment.setDiaryText(getDiaryText());
     }
 
     private String getDiaryText() {
+        String currentDiary = "일기를 작성해주세요";
         try {
             JSONObject obj = new JSONObject(readFile());
-            String currentDiary = obj.getString(selectedDate);
-            return currentDiary;
-        } catch (Exception e) {
-            return "일기를 작성해주세요";
+            currentDiary = obj.getString(selectedDate);
+        } catch (JSONException e) {
         }
+        System.out.println("currentDiary : " + currentDiary);
+        return currentDiary;
     }
 
     public String readFile() {
@@ -157,7 +165,9 @@ public class NotificationsFragment extends Fragment {
             reader.close();
             return result;
         } catch (Exception e) {
+            System.out.println("readFile() Exception 발생");
         }
+        System.out.println("readFile result: " + result); // 내 에뮬레이터에서 이 코드가 호출되는 이유 ..?
         return result;
     }
 

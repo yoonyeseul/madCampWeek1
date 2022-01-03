@@ -65,15 +65,24 @@ public class DiaryFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_diary, container, false);
         diaryTextView = root.findViewById(R.id.diaryTextViewInFragment);
         diaryTextView.setText(text);
+
+        System.out.println("Diary Fragment : onCreateView() 호출됨");
         return root;
     }
 
     public String text;
 
-    private View root;
+    public View root;
     private TextView diaryTextView;
 
     public void setDiaryText(String text) {
+        if (root == null) {
+            this.text = text;
+            System.out.println("왜 널이지 .. .. . . .. . . . ... . . . . . . . . ... .");
+            return;
+        }
+        diaryTextView = root.findViewById(R.id.diaryTextViewInFragment);
         diaryTextView.setText(text);
+        System.out.println("Diary Fragment : setDiaryText() 호출됨");
     }
 }
