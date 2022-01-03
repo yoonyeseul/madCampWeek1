@@ -121,7 +121,6 @@ public class ContactDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                System.out.println("11111");
                 Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                 finish();
                 startActivity(intent1);

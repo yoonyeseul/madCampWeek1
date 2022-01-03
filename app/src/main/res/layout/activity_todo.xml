@@ -26,6 +26,34 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/xButtonInTodoActivity" />
+    <ScrollView
+        app:layout_constraintBaseline_toBottomOf="@id/todoDateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/todoDateTextView"
+        app:layout_constraintBottom_toTopOf="@id/saveButtonInTodoActivity">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/todoEditRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                tools:ignore="MissingConstraints" />
+            <Button
+                android:id="@+id/addButtonInTodoActivity"
+                android:layout_width="75sp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Add"
+                app:backgroundTint="@color/blue"
+                app:layout_constraintTop_toBottomOf="@+id/todoEditRecyclerView"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </LinearLayout>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/saveButtonInTodoActivity"

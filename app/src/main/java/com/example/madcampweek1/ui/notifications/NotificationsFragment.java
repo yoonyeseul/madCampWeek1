@@ -2,28 +2,19 @@ package com.example.madcampweek1.ui.notifications;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.madcampweek1.R;
 import com.example.madcampweek1.databinding.FragmentNotificationsBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -31,13 +22,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class NotificationsFragment extends Fragment {
 
@@ -50,7 +39,7 @@ public class NotificationsFragment extends Fragment {
 
     FloatingActionButton floatingActionButton;
 
-    ToDoFragment toDoFragment = new ToDoFragment();
+    TodoFragment toDoFragment = new TodoFragment();
     DiaryFragment diaryFragment = new DiaryFragment();
 
     public static boolean textToChange = false;
@@ -71,7 +60,6 @@ public class NotificationsFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(position == 0 ? "To-do" : "diary")
         ).attach();
-
         setCalendarListener();
         setFloatingBtnListener();
         setDateTextView();
@@ -89,7 +77,7 @@ public class NotificationsFragment extends Fragment {
                         + (dayOfMonth / 10 == 0 ? "0" : "") + dayOfMonth;
                 selectedDate = text;
                 dateTextView.setText(selectedDate);
-
+                toDoFragment.setNewDate(selectedDate);
                 initTodoAndDiaryText();
             }
         });
@@ -101,6 +89,7 @@ public class NotificationsFragment extends Fragment {
         if (textToChange == true) {
             textToChange = false;
             diaryFragment.setDiaryText(getDiaryText());
+            toDoFragment.setNewDate(selectedDate);
         }
     }
 
@@ -134,6 +123,8 @@ public class NotificationsFragment extends Fragment {
 
     public void initTodoAndDiaryText() {
         diaryFragment.setDiaryText(getDiaryText());
+        toDoFragment.setContext(getContext());
+        toDoFragment.setDate(selectedDate);
     }
 
     private String getDiaryText() {

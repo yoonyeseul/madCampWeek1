@@ -33,8 +33,10 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.253125" />
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.3619791666666667" />
         <entry key="app/src/main/res/drawable/item_layout.xml" value="0.20260416666666667" />
+        <entry key="app/src/main/res/layout/activity_diary.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_image_detail.xml" value="0.189209726443769" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_todo.xml" value="0.22" />
         <entry key="app/src/main/res/layout/contact_add.xml" value="0.129981884057971" />
         <entry key="app/src/main/res/layout/contact_edit.xml" value="0.22752808988764045" />
         <entry key="app/src/main/res/layout/contact_item.xml" value="0.22" />
@@ -42,9 +44,14 @@
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_contact_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_diary.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.30117753623188404" />
+        <entry key="app/src/main/res/layout/fragment_to_do.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_todo.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_recyclerview.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/todo_edit_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/todo_item.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="app/src/main/res/menu/contact_edit_toolbar.xml" value="0.2740740740740741" />
         <entry key="app/src/main/res/menu/contact_toolbar_action.xml" value="0.5" />

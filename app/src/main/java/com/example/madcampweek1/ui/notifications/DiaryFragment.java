@@ -26,6 +26,10 @@ public class DiaryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public String text;
+
+    public View root;
+    private TextView diaryTextView;
 
     public DiaryFragment() {
         // Required empty public constructor
@@ -70,17 +74,17 @@ public class DiaryFragment extends Fragment {
         return root;
     }
 
-    public String text;
 
-    public View root;
-    private TextView diaryTextView;
 
     public void setDiaryText(String text) {
         if (root == null) {
             this.text = text;
+
+            System.out.println(text);
             System.out.println("왜 널이지 .. .. . . .. . . . ... . . . . . . . . ... .");
             return;
         }
+        System.out.println(text);
         diaryTextView = root.findViewById(R.id.diaryTextViewInFragment);
         diaryTextView.setText(text);
         System.out.println("Diary Fragment : setDiaryText() 호출됨");

@@ -78,7 +78,6 @@ public class ContactAdd extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                System.out.println("11111");
                 Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent1);
                 finish();
@@ -100,7 +99,6 @@ public class ContactAdd extends AppCompatActivity {
                 getApplicationContext().startActivity(intent);
                 finish();
                 ((Activity) this).overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
-
 
             default :
                 return super.onOptionsItemSelected(item);
