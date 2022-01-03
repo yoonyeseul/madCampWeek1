@@ -129,4 +129,10 @@ public class DiaryFragment extends Fragment {
         }
         return result;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        root.requestLayout(); // viewPager2 의 height 를 동적으로 바꿔주기 위한 코드
+    }
 }

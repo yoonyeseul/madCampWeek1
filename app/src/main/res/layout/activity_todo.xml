@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notifications.TodoActivity">
+
     <Button
         android:id="@+id/xButtonInTodoActivity"
         android:layout_width="20sp"
@@ -26,34 +27,61 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/xButtonInTodoActivity" />
-    <ScrollView
-        app:layout_constraintBaseline_toBottomOf="@id/todoDateTextView"
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/todoDateTextView"
-        app:layout_constraintBottom_toTopOf="@id/saveButtonInTodoActivity">
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/saveButtonInTodoActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todoDateTextView">
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/todoEditRecyclerView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
 
-                tools:ignore="MissingConstraints" />
-            <Button
-                android:id="@+id/addButtonInTodoActivity"
-                android:layout_width="75sp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Add"
-                app:backgroundTint="@color/blue"
-                app:layout_constraintTop_toBottomOf="@+id/todoEditRecyclerView"
-                app:layout_constraintStart_toStartOf="parent"/>
+                tools:ignore="MissingConstraints">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/addButtonInTodoActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingLeft="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
+                    android:stateListAnimator="@null"
+                    android:text="추가하기"
+                    android:textColor="#000000"
+                    app:backgroundTint="#00000000"
+                    app:icon="@drawable/ic_baseline_add_circle_outline_24"
+                    app:iconSize="30sp"
+                    app:iconTint="@color/blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/saveButtonInTodoActivity"

@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="8dp">
 
-       <Button
-           android:layout_width="32dp"
-           android:layout_height="32dp"
-           android:id="@+id/todo_delete"
-           android:text="Add"
-           app:backgroundTint="@color/red"
-           android:textSize="24dp"
-           android:textStyle="bold"
-           android:layout_gravity="center"
-           android:textColor="@color/white"
-           android:background="@drawable/circle"
-           />
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:text="ddddd"
-            android:id="@+id/edit_todo"/>
+    <Button
+        android:id="@+id/todo_delete"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_baseline_remove_circle_outline_24"
+        android:text="Add"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/red" />
+
+    <EditText
+        android:id="@+id/edit_todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:text="ddddd" />
 
 
 </LinearLayout>
