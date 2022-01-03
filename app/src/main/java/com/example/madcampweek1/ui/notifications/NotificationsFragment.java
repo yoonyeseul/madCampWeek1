@@ -91,7 +91,6 @@ public class NotificationsFragment extends Fragment {
                 dateTextView.setText(selectedDate);
 
                 initTodoAndDiaryText();
-//                diaryFragment.setDiaryText(getDiaryText()); // (view 만들어지기 전 날짜 선택하는 경우 text 안 바뀜)
             }
         });
     }
@@ -134,12 +133,7 @@ public class NotificationsFragment extends Fragment {
     }
 
     public void initTodoAndDiaryText() {
-        if (diaryFragment.root == null) {
-            diaryFragment.text = getDiaryText();
-            System.out.println("루트가 null. . .. ... . .... .. .. . .. ...... .. .");
-        }
-        else
-            diaryFragment.setDiaryText(getDiaryText());
+        diaryFragment.setDiaryText(getDiaryText());
     }
 
     private String getDiaryText() {
