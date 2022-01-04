@@ -4,7 +4,7 @@
 
 윤예슬 : 갤러리, Diary
 
-<br/>
+<br/><br/>
 
 # 첫 번째 탭 : 연락처
 연락처 정보를 추가, 수정 및 삭제 가능
@@ -202,7 +202,7 @@ editText.addTextChangedListener(new TextWatcher() {
         });
 ```
 
-
+<br/><br/>
 
 # 두 번째 탭 : 갤러리
 
@@ -226,7 +226,7 @@ editText.addTextChangedListener(new TextWatcher() {
 Thread로 만드는 경우 Thread가 종료되기 이전에 탭을 이동하거나 같은 탭을 다시 누르는 경우 앱이 다운되는 문제가 생기므로
 onDestroy()에서 Thread에 interrupt() 호출하고 wait() 하도록 했다.
 
-
+<br/><br/>
 
 # 세 번째 탭 : 캘린더
 
