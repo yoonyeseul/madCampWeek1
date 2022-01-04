@@ -87,26 +87,6 @@ ex> {"contact": [
 그 뒤 가나다 순서대로 JSONObject를 배열하기 위해서 for 문을 이용하여 obj안에서 sObject가 들어갈 자리를 찾을 후에 그 자리에 sObject를 put 하였다.
 다음으로 obj를 새로 contact.json에 write하여 연락처 정보를 update하였다.
 
-```Java
-for (int i = 0; i < oldJson.length(); i++) {
-
-    if (oldJson.getJSONObject(i).getString("name").compareTo(sObject.getString("name")) >= 0) {
-        pos = i;
-        newJson.put(i, sObject);
-        break;
-     }
-     newJson.put(i, oldJson.getJSONObject(i));
-}
-if (pos == -1) {
-    pos = oldJson.length() - 1;
-    newJson.put(pos + 1, sObject);
-}
-else {
-    for (int j = pos + 1; j <= oldJson.length(); j++) {
-        newJson.put(j, oldJson.getJSONObject(j - 1));
-    }
-}
-```
 
 ## 연락처 수정
 
@@ -120,28 +100,6 @@ else {
 
 연락처 삭제는 ContactDetail Activity에서 삭제 아이콘을 클릭하면 contact.json 파일을 읽어 JSONObject를 만든 후 "contact"에 들어어있는 JSONArray에서 현재 보고 있는 연락처의 "id"를 가지고 있는 JSONObject를 지운 후 다시 JSONObject를 만들어 contact.json에 write하여 구현하였다.
 
-```Java
-public JSONArray deleteData(int id) {
-        String json = readFile();
-        int i;
-        try {
-            JSONArray oldJson = jsonParsing(json);
-            JSONArray newJson = new JSONArray();
-            for(i = 0; i < oldJson.length(); i++) {
-                if(oldJson.getJSONObject(i).getInt("id") == id) {
-                    continue;
-                }
-                newJson.put(oldJson.getJSONObject(i));
-            }
-            return newJson;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-```
-
 삭제 아이콘을 클릭하였을 때 먼저 삭제 여부를 되묻고 확인을 클릭하면 삭제를 진행하게 하였다. 
 
 
@@ -151,56 +109,7 @@ public JSONArray deleteData(int id) {
 
 연락처 검색은 연락처 recyclerViewAdapter에 filter 함수를 만들어 구현하였다. 이 함수에서는 editText(검색창)에서 입력된 String을 포함하고 있는 이름을 가진 연락처들만으로 filteredList를 만들고 이 filteredList로 recyclerView를 다시 만들어 검색한 이름만이 view에 보이도록 하였다. 
 
-```Java
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String charString = constraint.toString();
-                if(charString.isEmpty()) {
-                    filteredList = list;
-                } else {
-                    ArrayList<ContactItem> filteringList = new ArrayList<>();
-                    for(ContactItem contact : list) {
-                        if(contact.getName().toLowerCase().contains(charString.toLowerCase())) {
-                            filteringList.add(contact);
-                        }
-                    }
-                    filteredList = filteringList;
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = filteredList;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredList = (ArrayList<ContactItem>)results.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-```
 editText에서 Text가 변화할때 마다 filteredList가 바뀔 수 있도록 editText에 TextChangeListner을 추가하였다. 
-```Java
-editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mRecyclerAdapter.getFilter().filter(charSequence);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-```
 
 <br/><br/>
 
