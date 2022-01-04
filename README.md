@@ -228,8 +228,16 @@ editText.addTextChangedListener(new TextWatcher() {
 
 # 두 번째 탭 : 갤러리
 ## 추가 버튼
+<img src="https://user-images.githubusercontent.com/78538108/148030777-093f70c9-3317-44e8-bdc8-80cea7565d51.gif" weight="200" height="400"/>
+
 갤러리에서 이미지 하나를 가져와 추가할 수 있다.
+
+## 이미지 상세화면
+<img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" weight="200" height="400"/>
+
 ## 레이아웃 변경 버튼
+<img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" weight="200" height="400"/>
+
 초기 레이아웃의 columnCount는 3이다. columnCount가 3인 경우 1로, 1인 경우 3으로 변경한다.
 ## 이미지 해상도 문제
 이미지를 불러올 때 원래 해상도를 그대로 불러오는 경우 시간이 너무 오래 걸리는 문제가 생긴다.
@@ -238,6 +246,11 @@ editText.addTextChangedListener(new TextWatcher() {
 이를 Thread로 만들어 이미지가 로딩될 때마다 바로 띄워지도록 하였다.
 Thread로 만드는 경우 Thread가 종료되기 이전에 탭을 이동하거나 같은 탭을 다시 누르는 경우 앱이 다운되는 문제가 생기므로
 onDestroy()에서 Thread에 interrupt() 호출하고 wait() 하도록 했다.
+
+## 이미지 삭제
+<img src="https://user-images.githubusercontent.com/78538108/148030903-d6374615-6b7e-4a68-b221-e128cff29d48.gif" weight="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148030921-6f3a45fa-cbf2-4e9d-b417-c7ae5b9cd071.gif" weight="200" height="400"/>
+
 
 # 세 번째 탭 : 캘린더
 캘린더에 To-do 리스트, diary를 구현하였다.
