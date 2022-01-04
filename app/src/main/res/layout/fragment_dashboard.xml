@@ -11,10 +11,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingHorizontal="12dp"
-        android:background="@color/background_gray"
-        >
+        android:layout_height="wrap_content"
+        android:background="#fafafa"
+        android:paddingHorizontal="12dp">
 
         <Button
             android:id="@+id/button"
@@ -31,10 +30,12 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
             android:text="갤러리"
-            android:textStyle="bold"
-            android:textSize="20dp"
             android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

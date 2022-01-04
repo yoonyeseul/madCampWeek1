@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.notifications.TodoActivity">
+    tools:context=".ui.notifications.TodoActivity"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
 
     <Button
         android:id="@+id/xButtonInTodoActivity"
