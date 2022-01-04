@@ -266,6 +266,9 @@ public class DashboardFragment extends Fragment {
 
         int imageWidth = getImageWidthAccordingToWindowSize();
 
+        iv.setPadding(2,2,2,2);
+        iv.setCropToPadding(true);
+
         iv.setId(id);
         iv.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);

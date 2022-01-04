@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:columnCount="3"
             android:orientation="horizontal"
-            />
+            android:useDefaultMargins="true" />
 
     </ScrollView>
 </LinearLayout>
