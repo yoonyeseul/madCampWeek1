@@ -264,13 +264,15 @@ editText.addTextChangedListener(new TextWatcher() {
 
 # 두 번째 탭 : 갤러리
 
-<img src="https://user-images.githubusercontent.com/78538108/148030777-093f70c9-3317-44e8-bdc8-80cea7565d51.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030903-d6374615-6b7e-4a68-b221-e128cff29d48.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030921-6f3a45fa-cbf2-4e9d-b417-c7ae5b9cd071.gif" width="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148030777-093f70c9-3317-44e8-bdc8-80cea7565d51.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" width="200" height="400"/>
 
 이미지 추가 : 갤러리에서 이미지 하나를 가져와 추가.
 
 레이아웃 변경 : 초기 레이아웃의 columnCount는 3이다. columnCount가 3인 경우 1로, 1인 경우 3으로 변경. GridLayout 사용.
 
 이미지 상세 페이지: 이미지 확대, 축소, 삭제, 페이지 돌아가기 기능.
+
+<img src="https://user-images.githubusercontent.com/78538108/148030903-d6374615-6b7e-4a68-b221-e128cff29d48.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030921-6f3a45fa-cbf2-4e9d-b417-c7ae5b9cd071.gif" width="200" height="400"/>
 
 이미지 삭제: 삭제 여부를 되묻고 삭제.
 
