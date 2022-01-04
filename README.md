@@ -1,32 +1,19 @@
 # madCampWeek1
 몰입캠프 1주차 - 3개의 탭을 가진 안드로이드 앱
 
-
-문석훈: 연락처, To-do
-
-윤예슬: 갤러리, Diary
-
-
-첫 번째 탭: 연락처
-
-두 번째 탭: 갤러리
-
-세 번째 탭: 캘린더 (To-do, Diary)
-
-
 # 첫 번째 탭 : 연락처
 연락처 정보를 추가, 수정 및 삭제 가능
-## 연락처 정보
+## 연락처 정보 DB 구조
 앱의 내부 저장소에 contact.json 이라는 파일을 만들어 이 안에 JSONObject로 각 연락처의 정보를 저장하였다. JSONObject의 구조는 다음과 같다.
 
 {"contact": JSONArray, "count": int}
 
-여기서 "contact"의 value인 JSONArray에는 JSONObject 형태의 연락처 정보가 저장된다. 이 때 JSONObject 구조는 다음과 같다. 
+"contact"키에는 JSONArray가 삽으로 존재하며 이 JSONArray 안에는 각 연락처를 JSONObject로 하여 배열의 형태 저장해 두었다. 각 연락처는 다음과 같은 구조로 저장해두었다. 
 
 {"id": int, "name": String, "number": String, "email": String, "web": String, "job": String, "sns": String, "address": String}
 
-"id"는 각 연락처의 고유한 값이며 이를 이용하여 이후 각 연락처를 수정, 삭제한다.
-"count"는 연락처를 추가할 때 각 연락처에 고유한 "id"를 부여하기 위한 값이며, 각 연락처가 추가 될 때 마다 "count"의 값을 "id"로 주고 "count"에는 기존의 값에 1을 더한 값을 새로 저장하여 바꿔주었다.
+"id"는 각 연락처의 고유한 값이며 이를 이용하여 이후 각 연락처를 수정, 삭제하는 기능을 구현하였다.
+"count"는 연락처를 추가할 때 각 추가되는 연락처에 고유한 "id"를 부여하기 위해 추가한 값이며, 각 연락처가 추가 될 때 마다 "count"의 값을 "id"로 주고 "count"에는 기존의 값에 1을 더한 값을 새로 저장하여 바꿔주었다.
 
 ContactItem Class를 만들어 연락처 정보를 파일에서 읽은 후 저장하였다. 
 
@@ -47,8 +34,8 @@ public class ContactItem {
 
 <img src="https://user-images.githubusercontent.com/78538108/148012979-d568fc6f-8f7c-4e89-88ca-69c09ecc84f4.png" width="200" height="400"/>
 
-recyclerView를 이용하여 연락처 List를 구현하였다. 이름을 클릭하면 그 연락처의 상세 페이지로 넘어가며 이때 intent를 이용하여 recyclerView에 있는 연락처 정보를 전달하였다.
-각 연락처는 가나다 순으로 나열하였다. 또한 검색창을 이용하여 연락처를 검색할 수 있게 하였고 + 버튼을 눌러 연락처를 추가 할 수 있다. 
+연락처에는 기본적으로 이름만으로 각 연락처를 나타내었으며 recyclerView를 이용하여 연락처 List를 구현하였다. 이름을 클릭하면 그 연락처의 상세 페이지로 넘어가며 이때 intent를 이용하여 recyclerView에 있는 연락처 정보를 contactDetail Activity로 전달하였다.
+각 연락처는 가나다 순으로 나열하였다. 그리고 위 검색창을 이용하여 연락처를 검색할 수 있게 하였고 위 툴바에 있는 + 버튼을 누르게 되면 연락처를 추가 할 수 있게 하였다. 
 
 ## 연락처 추가
 <img src="https://user-images.githubusercontent.com/78538108/148014266-7f61dccc-0f67-4820-a282-a8fcd6a9e2d4.gif" width="200" height = "400"/>
@@ -110,9 +97,9 @@ else {
 
 ## 연락처 수정
 
-<img src="https://user-images.githubusercontent.com/78538108/148020115-1b56bca9-0692-4e87-b9b1-0da35e287b2d.gif" weight="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148020115-1b56bca9-0692-4e87-b9b1-0da35e287b2d.gif" width="200" height="400"/>
 
-연락처 정보들을 intent에 넣어준 후에 ContactEdit Activity에서 정보들을 get하여 각 정보들의 EditText에 초기값으로 setText 하였다. 그 뒤 정보들을 수정하고 완료 아이콘을 클릭하게 되면 각 정보들와 현재 연락처의 "id"로 새로운 객체를 만든뒤 연락처를 추가했을 때와 마찬가지로 JSONArray에 넣어주었다. 이때 기존에 존재하던 수정 이전의 연락처 JSONObject는 현재 "id"를 이용하여 찾은 후 제거해 주고 수정된 연락처 JSONObject를 추가해주었고 연락처 추가와 마찬가지로 가나다 순서로 정렬을 해주기 위해 for문으로 수정된 연락처가 들어갈 위치를 탐색한 후 넣어주었다. 
+연락처는 ContactDetail Activity에서 수정 아이콘을 클릭했을 때 시작되는 Activity로 연락처 정보들을 먼저 intent로 ContactDetail Activity에서 intent에 넣어준 후에 ContactEdit Activity에서 정보들을 get하여 각 정보들의 EditText에 초기값으로 setText 하였다. 그 뒤 정보들을 수정하고 완료 아이콘을 클릭하게 되면 각 정보들와 현재 연락처의 "id"로 새로운 객체를 만든뒤 연락처를 추가했을 때와 마찬가지로 JSONArray에 넣어주었다. 이때 기존에 존재하던 수정 이전의 연락처 JSONObject는 현재 "id"를 이용하여 찾은 후 제거해 주고 수정된 연락처 JSONObject를 추가해주었고 연락처 추가와 마찬가지로 가나다 순서로 정렬을 해주기 위해 for문으로 수정된 연락처가 들어갈 위치를 탐색한 후 넣어주었다. 
 
 ```Java
 for(int i = 0; i < oldJson.length(); i++) {
@@ -153,9 +140,9 @@ else {
 
 ## 연락처 삭제
 
-<img src="https://user-images.githubusercontent.com/78538108/148026193-ea0b5d4d-4376-4476-847d-a631052c04e6.gif" weight="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148026193-ea0b5d4d-4376-4476-847d-a631052c04e6.gif" width="200" height="400"/>
 
-삭제 아이콘을 클릭하면 contact.json 파일을 읽어 JSONObject를 만든 후 "contact"에 들어있는 JSONArray에서 현재 보고 있는 연락처의 "id"를 가지고 있는 JSONObject를 지운 후 다시 JSONObject를 만들어 contact.json에 write하여 구현하였다.
+연락처 삭제는 ContactDetail Activity에서 삭제 아이콘을 클릭하면 contact.json 파일을 읽어 JSONObject를 만든 후 "contact"에 들어어있는 JSONArray에서 현재 보고 있는 연락처의 "id"를 가지고 있는 JSONObject를 지운 후 다시 JSONObject를 만들어 contact.json에 write하여 구현하였다.
 
 ```Java
 public JSONArray deleteData(int id) {
@@ -179,12 +166,12 @@ public JSONArray deleteData(int id) {
     }
 ```
 
-삭제 아이콘을 클릭하였을 때 삭제 여부를 되묻고 확인을 클릭하면 삭제한다. 
+삭제 아이콘을 클릭하였을 때 Alert를 이용하여 먼저 삭제를 정말로 하는 건지 확인을 한 후 확인을 클릭하면 삭제를 진행하게 하였다. 
 
 
 ## 연락처 검색
 
-<img src="https://user-images.githubusercontent.com/78538108/148023471-4eed85c2-2939-4268-9c61-cbc16b8f7599.gif" weight="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148023471-4eed85c2-2939-4268-9c61-cbc16b8f7599.gif" width="200" height="400"/>
 
 연락처 검색은 연락처 recyclerViewAdapter에 filter 함수를 만들어 구현하였다. 이 함수에서는 editText(검색창)에서 입력된 String을 포함하고 있는 이름을 가진 연락처들만으로 filteredList를 만들고 이 filteredList로 recyclerView를 다시 만들어 검색한 이름만이 view에 보이도록 하였다. 
 
@@ -241,20 +228,17 @@ editText.addTextChangedListener(new TextWatcher() {
 
 # 두 번째 탭 : 갤러리
 ## 추가 버튼
-<img src="https://user-images.githubusercontent.com/78538108/148030777-093f70c9-3317-44e8-bdc8-80cea7565d51.gif" weight="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148030777-093f70c9-3317-44e8-bdc8-80cea7565d51.gif" width="200" height="400"/>
 
-갤러리에서 이미지 하나를 가져와 추가 가능
+갤러리에서 이미지 하나를 가져와 추가할 수 있다.
 
 ## 이미지 상세화면
-<img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" weight="200" height="400"/>
-
-이미지 확대, 축소, 삭제 및 페이지 뒤로 가기 기능
+<img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" width="200" height="400"/>
 
 ## 레이아웃 변경 버튼
-<img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" weight="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" width="200" height="400"/>
 
-초기 레이아웃의 columnCount는 3이다. columnCount가 3인 경우 1로, 1인 경우 3으로 변경한다. GridLayout을 사용하였다.
-
+초기 레이아웃의 columnCount는 3이다. columnCount가 3인 경우 1로, 1인 경우 3으로 변경한다.
 ## 이미지 해상도 문제
 이미지를 불러올 때 원래 해상도를 그대로 불러오는 경우 시간이 너무 오래 걸리는 문제가 생긴다.
 이미지 크기를 레이아웃에 맞춰 가져오도록 하였다.
@@ -264,9 +248,51 @@ Thread로 만드는 경우 Thread가 종료되기 이전에 탭을 이동하거�
 onDestroy()에서 Thread에 interrupt() 호출하고 wait() 하도록 했다.
 
 ## 이미지 삭제
-<img src="https://user-images.githubusercontent.com/78538108/148030903-d6374615-6b7e-4a68-b221-e128cff29d48.gif" weight="200" height="400"/>
-<img src="https://user-images.githubusercontent.com/78538108/148030921-6f3a45fa-cbf2-4e9d-b417-c7ae5b9cd071.gif" weight="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148030903-d6374615-6b7e-4a68-b221-e128cff29d48.gif" width="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148030921-6f3a45fa-cbf2-4e9d-b417-c7ae5b9cd071.gif" width="200" height="400"/>
 
 
-# 세 번째 탭 : 캘린더 (To-do, Diary)
-캘린더에 To-do 리스트, diary를 구현하였다.
+# 세 번째 탭 : 캘린더
+
+## 캘린더 
+
+## Todo Fragment
+
+선택한 날짜에 해당하는 TodoList를 화면에 보여준다. 각 Todo 항목은 checkBox를 이용하여 완료하였을 경우 클릭하면 줄이 처지고 박스의 색이 변하며 완료되었음을 나타낸다. edit버튼을 클릭하면 그 날짜의 TodoList를 수정할 수 있다.
+
+### TodoList DB 구조
+
+TodoList의 구조는 앱의 내부저장소에 todo.json에 JSONObject를 아래와 같은 구조로 만들어 저장하였다. 
+
+{date: JSONArray}
+
+각 날짜를 String으로 하여 키로 설정한 후 각 키에 값으로 JSONArray을 할당하였다. 각 JSONArray는 아래와 같은 구조의 JSONObject들의 배열이다. 
+
+{"check": Boolean, "content": String}
+
+각 JSONObject는 todoList의 각 todo Item이며 그 항목의 완료 여부를 "check"키에 할당하여 Boolean에 저장하였고, 그 todo Item의 내용을 "content"에 저장하였다.
+
+json파일에서 읽은 데이터를 아래와 같은 TodoItem Class에 저장하여 이후 RecyclerView에 사용하였다.
+
+```Java
+public class TodoItem {
+    Boolean check;
+    String content;
+    ...
+```
+
+### Todo Item
+
+Todo Fragment에서 각 날짜에 해당하는 Todo List를 RecyclerView를 이용하여 구현하였다. RecyclerView에서 각 item은 checkBox로 구현하여 check가 될 수 있도록 하였으며 "content"에 있는 항목은 checkBox의 Text로 설정하였다. 각 checkBox가 클릭돼었을 때 todo.json에서 그 todoItem의 "check"를 현재 check 상태로 update에 주어 todo.json 파일이 현재 각 todo Item의 상태를 저장하고 있을 수 있도록 하였다.
+
+<img src="https://user-images.githubusercontent.com/78538108/148038869-e77dab99-9bb4-4102-bf6d-74a2e3e9753f.gif" width = "200" height=""/>   <img src="https://user-images.githubusercontent.com/78538108/148038889-cb6d8a4b-0312-46fd-b841-9fca2291fa33.gif" width = "200" height=""/>
+
+
+### TodoList 수정
+
+<img src="https://user-images.githubusercontent.com/78538108/148038881-b38b45a3-ff3f-46e4-9dd6-bd19524ce0ef.gif" width = "200" height=""/>
+
+
+
+## Diary
+
