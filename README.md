@@ -9,6 +9,7 @@
 # 첫 번째 탭 : 연락처
 
 <img src="https://user-images.githubusercontent.com/78538108/148012979-d568fc6f-8f7c-4e89-88ca-69c09ecc84f4.png" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148014266-7f61dccc-0f67-4820-a282-a8fcd6a9e2d4.gif" width="200" height = "400"/>  <img src="https://user-images.githubusercontent.com/78538108/148020115-1b56bca9-0692-4e87-b9b1-0da35e287b2d.gif" width="200" height="400"/>
+
 <img src="https://user-images.githubusercontent.com/78538108/148026193-ea0b5d4d-4376-4476-847d-a631052c04e6.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148023471-4eed85c2-2939-4268-9c61-cbc16b8f7599.gif" width="200" height="400"/>
 
 연락처 정보 추가, 수정, 삭제 및 검색 가능
