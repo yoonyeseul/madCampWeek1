@@ -263,9 +263,8 @@ editText.addTextChangedListener(new TextWatcher() {
 ```
 
 # 두 번째 탭 : 갤러리
-![이미지 추가](https://user-images.githubusercontent.com/78538108/148050640-19862f59-8dad-4f0c-9b1b-d5a19856bcae.gif)
 
-<img src="" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" width="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148050640-19862f59-8dad-4f0c-9b1b-d5a19856bcae.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" width="200" height="400"/>
 
 이미지 추가 : 갤러리에서 이미지 하나를 가져와 추가.
 
