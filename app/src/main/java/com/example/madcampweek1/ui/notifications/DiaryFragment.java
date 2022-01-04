@@ -90,7 +90,7 @@ public class DiaryFragment extends Fragment {
         }
         diaryTextView = root.findViewById(R.id.diaryTextViewInFragment);
         textViewWhenNoDiary = root.findViewById(R.id.textViewWhenNoDiary);
-        if (text == "") {
+        if (text.length() == 0) {
             textViewWhenNoDiary.setVisibility(View.VISIBLE);
             diaryTextView.setVisibility(View.INVISIBLE);
         }

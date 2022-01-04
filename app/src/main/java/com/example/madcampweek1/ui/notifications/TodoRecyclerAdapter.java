@@ -131,6 +131,8 @@ public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapte
                 buttonDrawable = DrawableCompat.wrap(buttonDrawable);
                 DrawableCompat.setTint(buttonDrawable, Color.LTGRAY);
                 todoCheck.setBackground(buttonDrawable);
+
+                todoCheck.setTextColor(Color.rgb(100,100,100));
             }
             else {
                 todoCheck.setPaintFlags(todoCheck.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
@@ -140,6 +142,8 @@ public class TodoRecyclerAdapter extends RecyclerView.Adapter<TodoRecyclerAdapte
                 buttonDrawable = DrawableCompat.wrap(buttonDrawable);
                 DrawableCompat.setTint(buttonDrawable, Color.rgb(227, 242, 253));
                 todoCheck.setBackground(buttonDrawable);
+
+                todoCheck.setTextColor(Color.rgb(0,0,0));
             }
 
         }

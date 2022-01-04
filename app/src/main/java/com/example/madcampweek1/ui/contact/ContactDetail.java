@@ -1,7 +1,9 @@
 package com.example.madcampweek1.ui.contact;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -141,9 +144,7 @@ public class ContactDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-//                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                 finish();
-//                startActivity(intent1);
                 overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
 
                 return true;
@@ -165,32 +166,37 @@ public class ContactDetail extends AppCompatActivity {
                 intent.putExtra("contact_sns", sns);
                 intent.putExtra("contact_address", address);
                 intent.putExtra("contact_id", id);
-//                finish();
                 getApplicationContext().startActivity(intent);
 
                 overridePendingTransition(R.anim.slide_left2, R.anim.slide_left);
                 return true ;
             case R.id.contact_delete :
+                new AlertDialog.Builder(this)
+                        .setTitle("삭제")
+                        .setMessage("삭제하시겠습니까?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                JSONArray jArray = deleteData(id);
 
-                ContactEdit c = ((ContactEdit) ContactEdit.mContext);
-
-//                COUNT = ((ContactEdit) ContactEdit.mContext).getCOUNT();
-                JSONArray jArray = deleteData(id);
-
-                try {
-                    JSONObject obj = new JSONObject();
-                    obj.put("contact", jArray);
-                    obj.put("count", COUNT);
-                    writeFile(obj);
-//                    Intent delIntent = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    finish();
-//                    getApplicationContext().startActivity(delIntent);
-                    overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
-
-                    return true;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                                try {
+                                    JSONObject obj = new JSONObject();
+                                    obj.put("contact", jArray);
+                                    obj.put("count", COUNT);
+                                    writeFile(obj);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                finish();
+                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                // Toast.makeText(getActivity(), "삭제 취소", Toast.LENGTH_SHORT);
+                            }
+                        })
+                        .show();
+                return true;
 
             default :
                 return super.onOptionsItemSelected(item);
@@ -202,8 +208,6 @@ public class ContactDetail extends AppCompatActivity {
         File file = new File(getFilesDir(), fileTitle);
 
         try {
-            //파일 생성
-
             BufferedWriter bw = new BufferedWriter(new FileWriter(file,false));
             bw.write(object.toString());
             bw.close();
@@ -241,8 +245,6 @@ public class ContactDetail extends AppCompatActivity {
             for(int i=0; i<contactArray.length(); i++)
             {
                 JSONObject contactObject = contactArray.getJSONObject(i);
-
-
                 contactList.put(contactObject);
             }
             return contactList;
