@@ -78,8 +78,6 @@ public class ContactAdd extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-//                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent1);
                 finish();
                 ((Activity) this).overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
 
@@ -95,8 +93,6 @@ public class ContactAdd extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                getApplicationContext().startActivity(intent);
                 finish();
                 ((Activity) this).overridePendingTransition(R.anim.slide_right, R.anim.slide_right2);
 
@@ -111,9 +107,7 @@ public class ContactAdd extends AppCompatActivity {
             JSONArray oldJson = jsonParsing(json);
 
             JSONArray newJson = new JSONArray();
-            JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
-//           ContactItem newContact = new ContactItem(name, number);
-            //COUNT변수 정수형에서 문자형으로 변환 후 JSONObject에 입력
+            JSONObject sObject = new JSONObject();
             COUNT = COUNT + 1;
             int pos = -1;
             sObject.put("name", name);
