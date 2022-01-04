@@ -1,9 +1,10 @@
-# madCampWeek1
-몰입캠프 1주차 - 3개의 탭을 가진 안드로이드 앱
+# 몰입캠프 1주차 - 3개의 탭을 가진 안드로이드 앱
 
 문석훈 : 연락처, To-do
 
 윤예슬 : 갤러리, Diary
+
+
 
 # 첫 번째 탭 : 연락처
 연락처 정보를 추가, 수정 및 삭제 가능
@@ -201,6 +202,8 @@ editText.addTextChangedListener(new TextWatcher() {
         });
 ```
 
+
+
 # 두 번째 탭 : 갤러리
 
 <img src="https://user-images.githubusercontent.com/78538108/148050640-19862f59-8dad-4f0c-9b1b-d5a19856bcae.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" width="200" height="400"/>
@@ -222,6 +225,8 @@ editText.addTextChangedListener(new TextWatcher() {
 이를 Thread로 만들어 이미지가 로딩될 때마다 바로 띄워지도록 하였다.
 Thread로 만드는 경우 Thread가 종료되기 이전에 탭을 이동하거나 같은 탭을 다시 누르는 경우 앱이 다운되는 문제가 생기므로
 onDestroy()에서 Thread에 interrupt() 호출하고 wait() 하도록 했다.
+
+
 
 # 세 번째 탭 : 캘린더
 
