@@ -270,7 +270,16 @@ TodoList의 구조는 앱의 내부저장소에 todo.json에 JSONObject를 아�
 
 {"check": Boolean, "content": String}
 
-각 JSONObject는 todoList의 각 todo Item이며 그 항목의 완료 여부를 "check"키에 할당하여 Boolean에 저장하였고, 그 todo Item의 내용을 "content"에 저장하였다. 
+각 JSONObject는 todoList의 각 todo Item이며 그 항목의 완료 여부를 "check"키에 할당하여 Boolean에 저장하였고, 그 todo Item의 내용을 "content"에 저장하였다.
+
+json파일에서 읽은 데이터를 아래와 같은 TodoItem Class에 저장하여 이후 RecyclerView에 사용하였다.
+
+```Java
+public class TodoItem {
+    Boolean check;
+    String content;
+    ...
+```
 
 ### Todo Item
 
