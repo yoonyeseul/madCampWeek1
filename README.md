@@ -38,7 +38,7 @@ public class ContactItem {
 각 연락처는 가나다 순으로 나열하였다. 그리고 위 검색창을 이용하여 연락처를 검색할 수 있게 하였고 위 툴바에 있는 + 버튼을 누르게 되면 연락처를 추가 할 수 있게 하였다. 
 
 ## 연락처 추가
-<img src="https://user-images.githubusercontent.com/78538108/148011666-079300e5-b8af-4d9c-8c3a-18a77810b8ca.png" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148014266-7f61dccc-0f67-4820-a282-a8fcd6a9e2d4.gif" width="200" height = "400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148014266-7f61dccc-0f67-4820-a282-a8fcd6a9e2d4.gif" width="200" height = "400"/>
 
 
 이름, 전화번호, 이메일, 웹사이트, 직업, SNS, 주소 정보를 EditText로 입력 받은 후 툴바에 있는 완료 아이콘을 클릭하면 먼저 contact.json을 읽어 String을 만든후 이를 이용하여 JSONObject obj를 만든다. 그 뒤 "contact"에 있는 JSONArray에 새로 연락처를 추가하기 위해 새로 JSONObject sObject를 만들었다. contact.json 안에 들어있는 "count"를 새로 만든 sObject의 "id"로 put하였고 "count"의 값을 +1하여 다시 obj에 저장하였다. 각 EditText안에 있는 정보들을 이용하여 아래의 형태로 JSONObject를 만들었다.
