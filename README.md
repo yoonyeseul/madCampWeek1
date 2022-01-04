@@ -263,8 +263,9 @@ editText.addTextChangedListener(new TextWatcher() {
 ```
 
 # 두 번째 탭 : 갤러리
+![이미지 추가](https://user-images.githubusercontent.com/78538108/148050640-19862f59-8dad-4f0c-9b1b-d5a19856bcae.gif)
 
-<img src="https://user-images.githubusercontent.com/78538108/148030777-093f70c9-3317-44e8-bdc8-80cea7565d51.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" width="200" height="400"/>
+<img src="" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030844-d8fd6a36-05d9-4fc4-a55f-bba036bbb04d.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030785-2498ccfd-baf5-4ff7-ab46-f57f9c33e985.gif" width="200" height="400"/>
 
 이미지 추가 : 갤러리에서 이미지 하나를 가져와 추가.
 
@@ -272,7 +273,7 @@ editText.addTextChangedListener(new TextWatcher() {
 
 이미지 상세 페이지: 이미지 확대, 축소, 삭제, 페이지 돌아가기 기능.
 
-<img src="https://user-images.githubusercontent.com/78538108/148030903-d6374615-6b7e-4a68-b221-e128cff29d48.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148030921-6f3a45fa-cbf2-4e9d-b417-c7ae5b9cd071.gif" width="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148050584-53f18751-3c62-4729-90ac-6c088f5dfd36.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148050597-74972745-a80b-4a4c-ae9c-39a4e3b3f32b.gif" width="200" height="400"/>
 
 이미지 삭제: 삭제 여부를 되묻고 삭제.
 
@@ -340,6 +341,7 @@ edit 버튼을 누르면 현재 선택된 날짜의 todoList를 편잡히는 Act
 "2022.01.04": "오늘도 코딩을 했다"} 
 ```
 ### Diary 작성
-<img src="https://user-images.githubusercontent.com/78538108/148047692-83ed2306-0519-45a4-b481-57d34d822811.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148047699-3b57d253-a206-4b7c-b45e-afdc56bdd6fa.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148047706-0e1a0a53-df2e-47ee-9d7a-94af17ff4593.gif" width="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/78538108/148047692-83ed2306-0519-45a4-b481-57d34d822811.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148047699-3b57d253-a206-4b7c-b45e-afdc56bdd6fa.gif" width="200" height="400"/>  <img src="https://user-images.githubusercontent.com/78538108/148050794-b8f64b19-4962-4896-9cb7-1bd0c8dc1cd1.gif" width="200" height="400"/>
 
 일기 추가, 편집 기능. 완료 버튼을 누르면 일기 정보를 로컬에 저장.
+
