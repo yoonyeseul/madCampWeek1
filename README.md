@@ -56,7 +56,62 @@ ex> {"contact":[{"name":"문석훈", "number":"010-3088-8447", "email":"moonx011
 
 연락처는 ContactDetail Activity에서 수정 아이콘을 클릭했을 때 시작되는 Activity로 연락처 정보들을 먼저 intent로 ContactDetail Activity에서 intent에 넣어준 후에 ContactEdit Activity에서 정보들을 get하여 각 정보들의 EditText에 초기값으로 setText 하였다. 그 뒤 정보들을 수정하고 완료 아이콘을 클릭하게 되면 각 정보들와 현재 연락처의 "id"로 새로운 객체를 만든뒤 연락처를 추가했을 때와 마찬가지로 JSONArray에 넣어주었다. 이때 기존에 존재하던 수정 이전의 연락처 JSONObject는 현재 "id"를 이용하여 찾은 후 제거해 주고 수정된 연락처 JSONObject를 추가해주었고 연락처 추가와 마찬가지로 가나다 순서로 정렬을 해주기 위해 for문으로 수정된 연락처가 들어갈 위치를 탐색한 후 넣어주었다. 
 
+## 연락처 검색
 
+<img src="https://user-images.githubusercontent.com/78538108/148023471-4eed85c2-2939-4268-9c61-cbc16b8f7599.gif" weight="200" height="400"/>
+
+연락처 검색은 연락처 recyclerViewAdapter에 filter 함수를 만들어 구현하였다. 이 함수에서는 editText(검색창)에서 입력된 String을 포함하고 있는 이름을 가진 연락처들만으로 filteredList를 만들고 이 filteredList로 recyclerView를 다시 만들어 검색한 이름만이 view에 보이도록 하였다. 
+
+```Java
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if(charString.isEmpty()) {
+                    filteredList = list;
+                } else {
+                    ArrayList<ContactItem> filteringList = new ArrayList<>();
+                    for(ContactItem contact : list) {
+                        if(contact.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteringList.add(contact);
+                        }
+                    }
+                    filteredList = filteringList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredList = (ArrayList<ContactItem>)results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+```
+editText에서 Text가 변화할때 마다 filteredList가 바뀔 수 있도록 editText에 TextChangeListner을 아래와 같이 추가하여주었다. 
+```Java
+editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mRecyclerAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+```
 
 # 두 번째 탭 : 갤러리
 ## 추가 버튼
