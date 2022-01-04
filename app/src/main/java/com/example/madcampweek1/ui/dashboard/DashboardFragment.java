@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -115,7 +116,7 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
+    public void onStart() { // 버튼 disable 후, 끝나면 enable
         super.onStart();
         BottomNavigationView navigation_view = getActivity().findViewById(R.id.nav_view);
         navigation_view.getMenu().findItem(R.id.navigation_dashboard).setEnabled(false);
@@ -134,7 +135,6 @@ public class DashboardFragment extends Fragment {
     }
 
     public void loadStoredImages() {
-        // 버튼 disable 후, 끝나면 enable
         currentThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -167,27 +167,6 @@ public class DashboardFragment extends Fragment {
         currentThread.start();
     }
 
-//    private void loadStoredImages() {
-//        try {
-//            File filePath = getActivity().getCacheDir();
-//            File[] flist = filePath.listFiles();
-//            File[] sortedFlist = getSortedNameList(flist);
-//            for (File i : sortedFlist) {
-//                String imgpath = filePath + "/" + i.getName();
-////                Bitmap bm = ThumbnailUtils.createImageThumbnail(imgpath,  MediaStore.Images.Thumbnails.MINI_KIND);
-////                Bitmap bm = getBitmapForImage(imgpath); //BitmapFactory.decodeFile(imgpath);
-//
-//                ImageView imageView = new ImageView(getContext());
-//                setBitmapToImgView(imgpath, imageView);
-//
-//                addImageViewToGridLayout(imageView, getImageIdxFromName(i.getName()));
-//                maxIdx = Math.max(maxIdx, getImageIdxFromName(i.getName()));
-//            }
-//        } catch (Exception e) {
-////            Toast.makeText(getActivity(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     private Bitmap getBitmapForImgView(String imgPath) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -196,16 +175,6 @@ public class DashboardFragment extends Fragment {
         options.inSampleSize = calculateInSampleSize(options, imgWidth, imgWidth);
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(imgPath, options);
-    }
-
-    private void setBitmapToImgView(String imgPath, ImageView imageView) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imgPath, options);
-        int imgWidth = getImageWidthAccordingToWindowSize();
-        options.inSampleSize = calculateInSampleSize(options, imgWidth, imgWidth);
-        options.inJustDecodeBounds = false;
-        imageView.setImageBitmap(BitmapFactory.decodeFile(imgPath, options));
     }
 
     public static int calculateInSampleSize(
@@ -297,11 +266,6 @@ public class DashboardFragment extends Fragment {
 
         int imageWidth = getImageWidthAccordingToWindowSize();
 
-//        GridLayout.LayoutParams param= new GridLayout.LayoutParams(GridLayout.spec(
-//                GridLayout.UNDEFINED,GridLayout.FILL,1f),
-//                GridLayout.spec(GridLayout.UNDEFINED,GridLayout.FILL,1f));
-//        iv.setLayoutParams(param);
-
         iv.setId(id);
         iv.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -337,12 +301,16 @@ public class DashboardFragment extends Fragment {
         grid.addView(iv);
     }
 
+    private int windowWidth = 0;
+
     private int getImageWidthAccordingToWindowSize() {
-        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x / gridColumnCount;
+//        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+//        Display display = wm.getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+        if (windowWidth == 0)
+            windowWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        return windowWidth / gridColumnCount;
     }
 
     private void deleteImage(int imgIdx) {

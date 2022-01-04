@@ -2,21 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="2sp">
 
         <CheckBox
+            android:id="@+id/todo_check"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/todo_check">
+            android:background="@drawable/item_layout"
+            android:backgroundTint="#E3F2FD"
+            android:buttonTint="@color/black"
+            android:paddingStart="10sp">
 
         </CheckBox>
-<!--        <TextView-->
-<!--            android:id="@+id/todo_content"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16dp"-->
-<!--            android:text="asdfasf"-->
-<!--            android:textColor="@color/black"/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/todo_content"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:textSize="16dp"-->
+        <!--            android:text="asdfasf"-->
+        <!--            android:textColor="@color/black"/>-->
 
 
 </LinearLayout>

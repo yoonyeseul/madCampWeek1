@@ -12,16 +12,10 @@ public class TodoItem {
     Boolean check;
     String content;
 
-//    int resourceId;
-
     public TodoItem(Boolean check, String content) {
         this.check = check;
         this.content = content;
     }
-//
-//    public int getResourceId() {
-//        return resourceId;
-//    }
 
     public Boolean getCheck() {
         return check;
@@ -31,10 +25,6 @@ public class TodoItem {
         return content;
     }
 
-    //    public void setResourceId(int resourceId) {
-//        this.resourceId = resourceId;
-//    }
-//
     public void setCheck(Boolean check) {
         this.check = check;
     }
@@ -51,28 +41,6 @@ public class TodoItem {
 
     }
 
-
-    //    private static String getJsonString(AccessControlContext context) {
-//        String json = null;
-//        try {
-//            AssetManager am = context.getAssets();
-//            InputStream is = am.open("jsons/contact.json");
-//            int fileSize = is.available();
-//
-//            byte[] buffer = new byte[fileSize];
-//            is.read(buffer);
-//            is.close();
-//
-//            json = new String(buffer, "UTF-8");
-//        }
-//        catch (IOException ex)
-//        {
-//            ex.printStackTrace();
-//            return null;
-//        }
-//
-//        return json;
-//    }
     private static ArrayList<TodoItem> jsonParsing(String json, String date)
     {
         ArrayList<TodoItem> todoList = new ArrayList<>();

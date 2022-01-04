@@ -65,6 +65,14 @@ public class NotificationsFragment extends Fragment {
 
         viewPager = binding.viewPager;
         viewPager.setAdapter(new PagerAdapter(getActivity()));
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position == 0)
+                    toDoFragment.setNewDate(selectedDate);
+            }
+        });
 
         TabLayout tabLayout = binding.tabLayout;
 
