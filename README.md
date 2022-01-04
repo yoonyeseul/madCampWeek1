@@ -140,7 +140,33 @@ else {
 
 ## 연락처 삭제
 
-<img src="https://user-images.githubusercontent.com/78538108/148026193-ea0b5d4d-4376-4476-847d-a631052c04e6.gif" 
+<img src="https://user-images.githubusercontent.com/78538108/148026193-ea0b5d4d-4376-4476-847d-a631052c04e6.gif" weight="200" height="400"/>
+
+연락처 삭제는 ContactDetail Activity에서 삭제 아이콘을 클릭하면 contact.json 파일을 읽어 JSONObject를 만든 후 "contact"에 들어어있는 JSONArray에서 현재 보고 있는 연락처의 "id"를 가지고 있는 JSONObject를 지운 후 다시 JSONObject를 만들어 contact.json에 write하여 구현하였다.
+
+```Java
+public JSONArray deleteData(int id) {
+        String json = readFile();
+        int i;
+        try {
+            JSONArray oldJson = jsonParsing(json);
+            JSONArray newJson = new JSONArray();
+            for(i = 0; i < oldJson.length(); i++) {
+                if(oldJson.getJSONObject(i).getInt("id") == id) {
+                    continue;
+                }
+                newJson.put(oldJson.getJSONObject(i));
+            }
+            return newJson;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+```
+
+삭제 아이콘을 클릭하였을 때 Alert를 이용하여 먼저 삭제를 정말로 하는 건지 확인을 한 후 확인을 클릭하면 삭제를 진행하게 하였다. 
 
 
 ## 연락처 검색
