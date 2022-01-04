@@ -47,14 +47,101 @@ public class ContactItem {
 
 ex> {"contact":[{"name":"문석훈", "number":"010-3088-8447", "email":"moonx011@gmail.com", "web":"www.naver.com", "job":"학생","sns":"msh_0113", "address":"대전광역시 유성구 대학로 291 지혜관", "id":2}], "count":2}
 
+```Java
+String json = readFile();
+        try {
+            JSONArray oldJson = jsonParsing(json);
+
+            JSONArray newJson = new JSONArray();
+            JSONObject sObject = new JSONObject();
+            COUNT = COUNT + 1;
+            int pos = -1;
+            sObject.put("name", name);
+            sObject.put("number", number);
+            sObject.put("email", email);
+            sObject.put("web", web);
+            sObject.put("job", job);
+            sObject.put("sns", sns);
+            sObject.put("address", address);
+            sObject.put("id", COUNT);
+            if (oldJson.length() == 0) {
+                oldJson.put(sObject);
+                return oldJson;
+            }
+            ...
+```
+
 그 뒤 가나다 순서대로 JSONObject를 배열하기 위해서 for 문을 이용하여 obj안에서 sObject가 들어갈 자리를 찾을 후에 그 자리에 sObject를 put 하였다.
 다음으로 obj를 새로 contact.json에 write하여 연락처 정보를 update하였다.
+
+```Java
+for (int i = 0; i < oldJson.length(); i++) {
+
+    if (oldJson.getJSONObject(i).getString("name").compareTo(sObject.getString("name")) >= 0) {
+        pos = i;
+        newJson.put(i, sObject);
+        break;
+     }
+     newJson.put(i, oldJson.getJSONObject(i));
+}
+if (pos == -1) {
+    pos = oldJson.length() - 1;
+    newJson.put(pos + 1, sObject);
+}
+else {
+    for (int j = pos + 1; j <= oldJson.length(); j++) {
+        newJson.put(j, oldJson.getJSONObject(j - 1));
+    }
+}
+```
 
 ## 연락처 수정
 
 <img src="https://user-images.githubusercontent.com/78538108/148020115-1b56bca9-0692-4e87-b9b1-0da35e287b2d.gif" weight="200" height="400"/>
 
 연락처는 ContactDetail Activity에서 수정 아이콘을 클릭했을 때 시작되는 Activity로 연락처 정보들을 먼저 intent로 ContactDetail Activity에서 intent에 넣어준 후에 ContactEdit Activity에서 정보들을 get하여 각 정보들의 EditText에 초기값으로 setText 하였다. 그 뒤 정보들을 수정하고 완료 아이콘을 클릭하게 되면 각 정보들와 현재 연락처의 "id"로 새로운 객체를 만든뒤 연락처를 추가했을 때와 마찬가지로 JSONArray에 넣어주었다. 이때 기존에 존재하던 수정 이전의 연락처 JSONObject는 현재 "id"를 이용하여 찾은 후 제거해 주고 수정된 연락처 JSONObject를 추가해주었고 연락처 추가와 마찬가지로 가나다 순서로 정렬을 해주기 위해 for문으로 수정된 연락처가 들어갈 위치를 탐색한 후 넣어주었다. 
+
+```Java
+for(int i = 0; i < oldJson.length(); i++) {
+    if(oldJson.getJSONObject(i).getInt("id") == id) {
+        pos = i;
+        sObject.put("name", name);
+        sObject.put("number", number);
+        sObject.put("email", email);
+        sObject.put("web", web);
+        sObject.put("job", job);
+        sObject.put("sns", sns);
+        sObject.put("address", address);
+        sObject.put("id", id);
+        continue;
+    }
+    t.put(oldJson.getJSONObject(i));
+}
+
+for(int i = 0; i < t.length(); i++) {
+    if(t.getJSONObject(i).getString("name").compareTo(sObject.getString("name")) >= 0) {
+        newpos = i;
+        newJson.put(i, sObject);
+        break;
+    }
+    newJson.put(i, t.getJSONObject(i));
+}
+
+if (newpos == -1) {
+    newpos = t.length() - 1;
+    newJson.put(newpos + 1, sObject);
+}
+else {
+    for (int j = newpos + 1; j <= t.length(); j++) {
+        newJson.put(j, t.getJSONObject(j - 1));
+    }
+}
+```
+
+## 연락처 삭제
+
+<img src="https://user-images.githubusercontent.com/78538108/148026193-ea0b5d4d-4376-4476-847d-a631052c04e6.gif" 
+
 
 ## 연락처 검색
 
