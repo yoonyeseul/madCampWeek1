@@ -292,6 +292,9 @@ Todo Fragment에서 각 날짜에 해당하는 Todo List를 RecyclerView를 이�
 
 <img src="https://user-images.githubusercontent.com/78538108/148038881-b38b45a3-ff3f-46e4-9dd6-bd19524ce0ef.gif" width = "200" height=""/>
 
+edit 버튼을 누르면 현재 선택된 날짜의 todoList를 편잡히는 Activity로 이동하게 된다. 이 Activity에서는 todo.json에서 현재 선택된 날짜를 key로 가지는 TodoList를 읽어온 뒤 각 todo Item을 EditText의 초기값으로 설정하였다. 각 content를 편집하는 EditText와 그 항목을 삭제할 수 있는 삭제 버튼을 묶어 item을 만든 후에 recyclerView를 이용하여 TodoList의 모든 항목에 대해 편집 item을 만들었다. 그리고 recyclerView 아래에는 TodoList에 새로운 item을 추가할 수 있는 버튼을 만들었다.
+
+오른쪽 아래에 있는 완료 버튼을 누르게 되면 현재 각 EditText에 입력되어 있는 값들로 가시 JSONArray를 만들어 todo.json에 넣어 수정한 todoList를 저장하였다. 
 
 
 ## Diary
